@@ -83,6 +83,8 @@ Ce système a évolué par itérations rapides, passant d'un moteur purement sym
 
 </details>
 
+[🔍 Origine du Projet : Du Cerveau Symbolique aux LLM > Découvrez comment SecondMind est né comme une architecture déterministe (ConceptNet, Lesk, CFG) avant d'intégrer les modèles probabilistes.](./README_pipeline_symbolique_cognitif.md)
+
 ---
 
 > [!IMPORTANT]

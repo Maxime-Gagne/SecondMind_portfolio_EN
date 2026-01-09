@@ -1,3 +1,33 @@
+
+# 🧠 Origine du Projet : Architecture Cognitive Avant les LLM
+
+Avant d’être un système d’orchestration de modèles de langage, **SecondMind est né comme un cerveau symbolique**.
+
+En un mois, j’ai conçu et implémenté un pipeline cognitif complet à partir de zéro, sans dépendre de frameworks préexistants, en m’appuyant sur des fondations issues de l’IA symbolique et de la linguistique computationnelle :
+
+- **Graphes conceptuels** (ConceptNet)
+- **Sémantique lexicale** (WordNet, WOLF, Wiktionnaire)
+- **Désambiguïsation du sens** (algorithme de Lesk)
+- **Inférence symbolique**
+- **Planification explicite de la réponse**
+- **Génération linguistique contrôlée par grammaires formelles (CFG)**
+
+À cette étape, les LLM n’étaient **pas le cerveau**, mais au mieux une surface d’expression.
+La cognition, elle, était **déterministe, traçable et inspectable**.
+
+Ce travail a posé les fondations conceptuelles de SecondMind :
+- séparation stricte entre **raisonnement**, **validation**, **planification** et **génération**
+- représentation explicite de l’état cognitif
+- refus du raisonnement implicite non contrôlé
+
+L’architecture actuelle de SecondMind est l’évolution naturelle de ce premier cerveau :
+les LLM y sont intégrés comme **moteurs probabilistes spécialisés**, insérés dans des **protocoles de raisonnement symboliques et métacognitifs** que je conçois et gouverne.
+
+[Cliquez ici pour en savoir plus sur ce pipeline symbolique](./README_pipeline_symbolique_cognitif.md)
+
+> **Je ne conçois pas des prompts.
+> Je conçois des protocoles de pensée.**
+
 # 🚀 Le Nouveau Paradigme : L'Ingénierie par Orchestration Sémantique
 "En 2026, la compétence rare n'est plus de savoir écrire la syntaxe, mais de savoir diriger l'intelligence."
 
