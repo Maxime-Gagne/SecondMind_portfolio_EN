@@ -1,102 +1,84 @@
-### AgentAuditor – Gardien de la gouvernance technique et analyse statique
+### **AgentAuditor – Guardian of Technical Governance and Static Analysis**
 
-J’ai conçu `AgentAuditor` comme un **agent de gouvernance** dédié à la qualité et à la sécurité de l’architecture multi‑agents. Il s’appuie sur les contrats d’interface et sur l’`AuditorBase` (source de vérité des chemins et configs) pour surveiller en continu le code et les flux de données.
+I designed AgentAuditor as a **governance agent** dedicated to the quality and security of the multi-agent architecture. It relies on interface contracts and AuditorBase (the source of truth for paths and configs) to continuously monitor code and data flows.
 
-**Rôle global**
+**Global Role**
 
-- Garantir la **conformité aux contrats d’interface** (`contrats_interface.py`).
-- Protéger la **mémoire** et les dossiers critiques (`memoire/brute`, `persistante`, `reflexive`…) contre les opérations destructives non légitimes.
-- Vérifier la **structure des agents** (héritage `AgentBase`, usage du logger, respect de META_agent).
-- Auditer la **cohérence des flux** entre le LLM et la mémoire (pas de perte d’interactions).
-- Produire une **cartographie JSON** des fichiers Python pour le RAG Code et la compréhension globale du projet.
+* Ensure **compliance with interface contracts** (contrats\_interface.py).
+* Protect **memory** and critical folders (memoire/brute, persistante, reflexive…) against unauthorized destructive operations.
+* Verify **agent structure** (inheritance from AgentBase, logger usage, adherence to META\_agent).
+* Audit **flow consistency** between the LLM and memory (preventing interaction loss).
+* Produce a **JSON mapping** of Python files for Code RAG and global project understanding.
 
----
+#### **1\. Data & Security Audit**
 
-#### 1. Audit Data & Sécurité
+AgentAuditor uses the Python AST to analyze source code without executing it:
 
-`AgentAuditor` s’appuie sur l’AST Python pour analyser le code source sans l’exécuter :
+* **ContractComplianceVisitor** Verifies that all dataclass instantiations use **only** the fields defined in contrats\_interface.py.
+  → Prevents the appearance of "ghost fields" like ResultatIntention(foo="…").
+* **ShadowComplianceVisitor** Detects **dictionaries that imitate dataclasses** (same keys as Interaction, ResultatIntention, StandardPrompt, etc.).
+  → Forces code to use official interface contracts rather than improvised dict objects.
+* **FunctionHygieneVisitor** Analyzes functions to identify **dead variables** (assigned but never used) to keep code readable and maintainable.
+* **File Security Audit** Scans files to detect:
+  * Usage of destructive operations (.unlink, .remove, rmtree) on **sanctuaries** (critical folders defined in YAML).
+  * **Forbidden patterns** (raw eval, uncontrolled access, etc.).
+    Legitimate exceptions for backup rotations are recognized (presence of shutil.copy, backup, rotation…), so as not to block backup mechanisms.
 
-- **ContractComplianceVisitor**  
-  Vérifie que toutes les instanciations de dataclasses utilisent **uniquement** les champs définis dans `contrats_interface.py`.  
-  → Empêche l’apparition de champs fantômes comme `ResultatIntention(foo="…")`.
+#### **2\. Structure & Architecture Audit**
 
-- **ShadowComplianceVisitor**  
-  Détecte les **dictionnaires qui imitent des dataclasses** (mêmes clés que `Interaction`, `ResultatIntention`, `StandardPrompt`, etc.).  
-  → Force le code à passer par les contrats d’interface officiels plutôt que par des `dict` bricolés.
+Regarding structure, AgentAuditor ensures that agents comply with your META\_agent standards:
 
-- **FunctionHygieneVisitor**  
-  Analyse les fonctions pour repérer les **variables mortes** (assignées mais jamais utilisées) afin de garder un code lisible et maintenable.
+* auditer\_conformite\_structurelle:
+  * Ensures that every agent\_\*.py file contains at least one class that **inherits from AgentBase**.
+  * Verifies the presence of self.logger to guarantee the usage of the **CognitiveLogger** injected by the metaclass.
+* generer\_cartographie:
+  * Reads the auditor's YAML configuration (scope, exclusions).
+  * Traverses only authorized folders (defaulting to agentique/).
+  * Generates a project\_map.json listing all valid Python files (relative paths).
+    This mapping serves as the foundation for **Code RAG** (AgentRechercheCode) and architecture views (SemiCode IDE, debug tools).
 
-- **Audit sécurité fichier**  
-  Scanne les fichiers pour détecter :
-  - l’usage d’opérations destructives (`.unlink`, `.remove`, `rmtree`) sur des **sanctuaires** (dossiers critiques définis en YAML),
-  - des **patterns interdits** (eval brut, accès non contrôlé, etc.).  
-  Les exceptions légitimes de rotation de backups sont reconnues (présence de `shutil.copy`, `backup`, `rotation`…), afin de ne pas bloquer les mécanismes de sauvegarde.
+#### **3\. Flow Audit & LLM ↔ Memory Supervision**
 
----
+AgentAuditor is not limited to code: it also supervises the consistency of data flows.
 
-#### 2. Audit Structure & Architecture
+* \_charger\_stats\_agent reads, via AuditorBase, the dashboard\_stats section of each agent's YAML (periodically updated by the SynchroniseurStats in the backend).
+* auditer\_coherence\_flux compares:
+  * The number of calls to the **LLM Engine** (appels\_generer \+ appels\_generer\_stream).
+  * The number of saves in **raw memory** (appels\_sauvegarder\_interaction\_brute).
+  * The number of entries in **history** (appels\_memoriser\_interaction).
 
-Côté structure, `AgentAuditor` vérifie que les agents restent conformes à tes standards META_agent :
+If it detects that:
 
-- `auditer_conformite_structurelle` :
-  - s’assure que tout fichier `agent_*.py` contient au moins une classe qui **hérite de `AgentBase`**,  
-  - vérifie la présence de `self.logger` pour garantir l’usage du **CognitiveLogger** injecté par la métaclasse.
+* The LLM has generated more times than raw memory has logged, it triggers a **data leak alert** to the Guardian (\_signaler\_au\_gardien).
+* The history contains more entries than raw memory, it signals a **logical anomaly** (ex-nihilo creation).
 
-- `generer_cartographie` :
-  - lit la configuration YAML de l’auditor (périmètre, exclusions),
-  - parcourt uniquement les dossiers autorisés (par défaut `agentique/`),
-  - génère un `project_map.json` listant tous les fichiers Python valides (chemins relatifs).  
-  Cette cartographie sert de base au **RAG Code** (`AgentRechercheCode`) et aux vues d’architecture (SemiCode IDE, outils de debug).
+This layer ensures that no LLM response can silently disappear from the persistence pipeline.
 
----
+#### **4\. Global Orchestration: auditer\_systeme()**
 
-#### 3. Audit des Flux & Supervision LLM ↔ Mémoire
+The main entry point auditer\_systeme(mode="sanity\_check" | "deep\_scan"):
 
-`AgentAuditor` ne se limite pas au code : il supervise aussi la cohérence des flux de données.
+1. Reads its scope and exclusions from config\_agent\_auditor.yaml.
+2. Traverses targeted files.
+3. Applies, for each file:
+   * Security audit.
+   * Structural compliance.
+   * Internal hygiene.
+   * Contract compliance.
+   * Shadow dict detection (in deep\_scan mode).
+4. Executes a global audit of LLM ↔ memory flows.
+5. Regenerates the project mapping.
+6. Writes a complete JSON report to agentique/sous\_agents\_gouvernes/agent\_Auditor/logs/audit\_report.json.
 
-- `_charger_stats_agent` lit, via `AuditorBase`, la section `dashboard_stats` des YAML de chaque agent (mise à jour périodique par `SynchroniseurStats` dans le backend).
-- `auditer_coherence_flux` compare :
-  - le nombre d’appels au **Moteur LLM** (`appels_generer` + `appels_generer_stream`),
-  - au nombre de sauvegardes en **mémoire brute** (`appels_sauvegarder_interaction_brute`),
-  - et au nombre d’entrées en **historique** (`appels_memoriser_interaction`).
+This report is used by **ProjectGuardian** to automate reviews after critical file modifications (agent\_Semi.py, contrats\_interface.py, etc.).
 
-S’il détecte que :
+**Impact on Architecture**
 
-- le LLM a généré plus de fois que la mémoire brute n’a journalisé, il remonte une **alerte de fuite de données** au Gardien (`_signaler_au_gardien`),
-- l’historique contient plus d’entrées que la brute, il signale une **anomalie logique** (création ex‑nihilo).
+With AgentAuditor, I have industrialized the governance of my multi-agent system:
 
-Cette couche garantit qu’aucune réponse du LLM ne peut disparaître silencieusement du pipeline de persistance.
+* No drift in paths or interface contracts is tolerated (single source of truth via AuditorBase \+ contrats\_interface).
+* Agents remain structurally aligned with **META\_agent**.
+* LLM → memory flows are supervised globally (no logging gaps).
+* Project structure is constantly mapped to feed **Code RAG** and my tools (SemiCode IDE, Prompt Viewer).
 
----
-
-#### 4. Orchestration globale : `auditer_systeme()`
-
-L’entrée principale `auditer_systeme(mode="sanity_check" | "deep_scan")` :
-
-1. lit son périmètre et ses exclusions depuis `config_agent_auditor.yaml`,
-2. parcourt les fichiers ciblés,
-3. applique, pour chaque fichier :
-   - l’audit sécurité,
-   - la conformité structurelle,
-   - l’hygiène interne,
-   - la conformité aux contrats,
-   - la détection de shadow dicts (en mode `deep_scan`),
-4. exécute un audit global des flux LLM ↔ mémoire,
-5. régénère la cartographie de projet,
-6. écrit un rapport JSON complet dans `agentique/sous_agents_gouvernes/agent_Auditor/logs/audit_report.json`.
-
-Ce rapport est utilisé par le **GardienProjet** pour automatiser les revues après modification de fichiers critiques (`agent_Semi.py`, `contrats_interface.py`, etc.).
-
----
-
-**Impact dans l’architecture**
-
-Avec `AgentAuditor`, j’ai industrialisé la gouvernance de mon système multi‑agents :
-
-- aucune dérive de chemin ou de contrat d’interface n’est tolérée (source unique de vérité via `AuditorBase` + `contrats_interface`),
-- les agents restent structurellement alignés sur **META_agent**,
-- les flux LLM → mémoire sont supervisés globalement (pas de trous dans la journalisation),
-- la structure du projet est constamment cartographiée pour alimenter le **RAG Code** et mes outils (SemiCode IDE, Prompt Viewer).
-
-En pratique, `AgentAuditor` joue le rôle d’**auditeur interne automatique** : il vérifie que le cerveau (AgentSemi) et ses sous‑agents respectent en permanence les règles d’architecture que j’ai définies.
+In practice, AgentAuditor acts as an **automatic internal auditor**: it verifies that the brain (SemiAgent) and its sub-agents constantly respect the architectural rules I have defined.

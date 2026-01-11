@@ -1,14 +1,19 @@
-# Métacognition — Architecture Auto-Améliorante
+> 🧠 Metacognition — Self-Improving Architecture
 
-L'approche classique d'un assistant IA : on déploie un modèle, l'utilisateur s'en sert, les erreurs restent des erreurs. Le système est figé.
+The classic approach to an AI assistant is static: a model is deployed, the user interacts with it, and errors remain errors. The system is frozen in time.
 
-J'ai architecturé SecondMind autour d'un principe différent : **chaque interaction est une opportunité d'apprentissage**. Le système ne se contente pas de répondre — il observe ses propres sorties, évalue leur qualité, et transforme ses échecs en données exploitables.
+I architected SecondMind around a different principle: every interaction is a learning opportunity. The system doesn't just respond—it observes its own outputs, evaluates their quality, and transforms its failures into actionable data.
 
-Trois mécanismes travaillent ensemble :
-- **Introspection** : quand une réponse échoue, le système analyse pourquoi (pas juste quoi)
-- **Évaluation** : chaque génération est scorée par un module indépendant avant d'atteindre l'utilisateur
-- **Réentraînement** : les signaux collectés (erreurs, corrections, feedbacks) alimentent périodiquement les modèles de classification
+Three mechanisms working in synergy:
 
-Ce n'est pas un pipeline linéaire, c'est une boucle. L'information circule du symptôme vers la cause, de la cause vers la correction, de la correction vers le modèle. Le système d'aujourd'hui est meilleur que celui d'hier parce qu'il a appris de ses erreurs réelles, pas d'un dataset générique.
+Introspection: When a response fails, the system analyzes the why, not just the what.
 
-Cette architecture reflète ma conviction : un assistant personnel utile ne peut pas être statique. Il doit évoluer avec son utilisateur.
+Evaluation: Every generation is scored by an independent module before reaching the user.
+
+Retraining: Collected signals (errors, corrections, feedback) periodically feed the classification models.
+
+This is not a linear pipeline; it is a loop. Information flows from the symptom to the cause, from the cause to the correction, and from the correction back to the model. Today's system is better than yesterday's because it has learned from real-world errors, rather than a generic dataset.
+
+This architecture reflects my core conviction: a useful personal assistant cannot be static. It must evolve alongside its user.
+
+Maxime Gagné — Cognitive Architect — SecondMind

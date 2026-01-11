@@ -1,140 +1,118 @@
-# 📚 LiveDocs RAG — Base de Connaissance Technique "Temps Réel"
+# **📚 LiveDocs RAG — "Real-Time" Technical Knowledge Base**
 
-Micro-service de RAG spécialisé pour la documentation technique (Port 5000). Permet aux agents IA locaux d'écrire du code à jour (Pydantic V2, TRL, PEFT) en contournant leur date de coupure de connaissances.
+Specialized RAG micro-service for technical documentation (Port 5000). Enables local AI agents to write up-to-date code (Pydantic V2, TRL, PEFT) by bypassing their knowledge cutoff date.
 
----
+## **🎯 The Problem**
 
-## 🎯 Le Problème
-
-Les modèles de langage locaux (LLMs) comme Llama-3 ou Qwen sont excellents pour le raisonnement, mais leur connaissance des librairies Python évolue moins vite que le code lui-même.
+Local Large Language Models (LLMs) such as Llama-3 or Qwen are excellent at reasoning, but their knowledge of Python libraries evolves more slowly than the code itself.
 
 | Aspect | Description |
-|--------|-------------|
-| **Symptôme** | L'IA génère du code obsolète (ex: `@validator` de Pydantic V1 au lieu de `@field_validator` de V2) |
-| **Cause** | Le Knowledge Cutoff (date de fin d'entraînement) précède les dernières mises à jour majeures des frameworks |
-| **Conséquence** | Hallucinations syntaxiques et code qui plante à l'exécution |
+| :---- | :---- |
+| **Symptom** | The AI generates obsolete code (e.g., Pydantic V1's @validator instead of V2's @field\_validator) |
+| **Cause** | The Knowledge Cutoff (training end date) precedes the latest major framework updates |
+| **Consequence** | Syntactic hallucinations and code that crashes at execution |
 
----
+## **💡 The Solution: LiveDocs RAG**
 
-## 💡 La Solution : LiveDocs RAG
+Instead of re-training the model (expensive and slow), I designed a **living external memory** system. It is an autonomous micro-service that monitors, scrapes, vectorizes, and serves the most recent official documentation.
 
-Au lieu de ré-entraîner le modèle (coûteux et lent), j'ai conçu un système de **mémoire externe vivante**. C'est un micro-service autonome qui surveille, scrappe, vectorise et sert la documentation officielle la plus récente.
+### **Micro-Service Architecture**
 
-### Architecture Micro-Service
+The system is decoupled from the main brain (SecondMind) to ensure stability and avoid dependency conflicts.
 
-Le système est découplé du cerveau principal (SecondMind) pour garantir la stabilité et éviter les conflits de dépendances.
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     External World                               │
-│                  PyPI / HuggingFace Docs                        │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│              Port 5000 - LiveDocs Service                       │
-│                                                                  │
-│   Scraper Automatique ──► Chunker Sémantique ──► Embedder SBERT │
-│                                                       │          │
-│                                                       ▼          │
-│                                              ┌──────────────┐    │
-│                     API Flask ◄─────────────►│ Index FAISS  │    │
-│                         │                    └──────────────┘    │
-└─────────────────────────┼───────────────────────────────────────┘
-                          │ HTTP POST
-                          ▼
-┌─────────────────────────────────────────────────────────────────┐
-│              Port 3000 - Main AI Agent                          │
-│                                                                  │
-│                      Agent Code                                  │
-│                  (Contexte à jour)                              │
+┌─────────────────────────────────────────────────────────────────┐  
+│                    External World                               │  
+│               PyPI / HuggingFace Docs                           │  
+└──────────────────────────┬──────────────────────────────────────┘  
+                           │  
+                           ▼  
+┌─────────────────────────────────────────────────────────────────┐  
+│               Port 5000 \- LiveDocs Service                      │  
+│                                                                 │  
+│   Auto Scraper ──► Semantic Chunker ──► SBERT Embedder          │  
+│                                                   │             │  
+│                                                   ▼             │  
+│                                            ┌──────────────┐     │  
+│                     Flask API ◄───────────►│ FAISS Index  │     │  
+│                         │                  └──────────────┘     │  
+└─────────────────────────┼───────────────────────────────────────┘  
+                          │ HTTP POST  
+                          ▼  
+┌─────────────────────────────────────────────────────────────────┐  
+│               Port 3000 \- Main AI Agent                         │  
+│                                                                 │  
+│                        Code Agent                               │  
+│                    (Up-to-date Context)                         │  
 └─────────────────────────────────────────────────────────────────┘
-```
 
----
+## **⚙️ Technical Stack**
 
-## ⚙️ Stack Technique
+| Component | Technology |
+| :---- | :---- |
+| **Vector Search Engine** | FAISS (Facebook AI Similarity Search) — latency \< 50ms |
+| **Embeddings** | sentence-transformers/all-MiniLM-L6-v2 (384 dimensions, optimized for local CPU/GPU) |
+| **Backend** | Flask (Lightweight REST API) |
+| **Scraping** | BeautifulSoup4 \+ Version detection logic |
+| **Infrastructure** | Local (RTX 3090), runs in parallel with the main LLM |
 
-| Composant | Technologie |
-|-----------|-------------|
-| **Moteur de Recherche Vectoriel** | FAISS (Facebook AI Similarity Search) — latence < 50ms |
-| **Embeddings** | `sentence-transformers/all-MiniLM-L6-v2` (384 dimensions, optimisé CPU/GPU local) |
-| **Backend** | Flask (API REST légère) |
-| **Scraping** | BeautifulSoup4 + Logique de détection de version |
-| **Infrastructure** | Local (RTX 3090), tourne en parallèle du LLM principal |
+## **🔄 Data Pipeline**
 
----
+### **1\. Automated Ingestion (doc\_scraper\_phase2.py)**
 
-## 🔄 Flux de Données (Data Pipeline)
+The system does more than just read text files; it seeks the truth at the source:
 
-### 1. Ingestion Automatisée (`doc_scraper_phase2.py`)
+* Detection of installed packages via requirements.txt.  
+* Targeted scraping of official documentation (e.g., HuggingFace TRL, Pydantic).  
+* **Intelligent Chunking**: Splitting by logical sections (500 tokens) with overlap to preserve context.
 
-Le système ne se contente pas de lire des fichiers textes. Il va chercher la vérité à la source :
+### **2\. Semantic Indexing**
 
-- Détection des packages installés via `requirements.txt`
-- Scraping ciblé des documentations officielles (ex: HuggingFace TRL, Pydantic)
-- **Chunking Intelligent** : Découpage par sections logiques (500 tokens) avec overlap pour préserver le contexte
+* Each documentation snippet is converted into a vector.  
+* **Rich Metadata**: Each vector contains the exact source (URL), package name, and version.  
+* **Incremental Updates**: Only modified packages are re-indexed.
 
-### 2. Indexation Sémantique
+### **3\. Querying (Inference)**
 
-- Chaque snippet de documentation est converti en vecteur
-- **Métadonnées Riches** : Chaque vecteur contient la source exacte (URL), le nom du package et la version
-- **Mise à jour incrémentale** : Seuls les packages modifiés sont ré-indexés
+When Code Agent (on port 3000\) detects a technical intent (e.g., "Code an SFTTrainer"), it queries LiveDocs:
 
-### 3. Interrogation (Inférence)
+\# Internal call example by the Code Agent  
+response \= requests.post("http://localhost:5000/api/search", json={  
+    "query": "SFTTrainer configuration QLoRA",  
+    "k": 3  
+})  
+\# Result: Immediate injection of the SFTConfig class (TRL v0.8+) into the prompt
 
-Lorsqu'AgentCode (sur le port 3000) détecte une intention technique (ex: "Code un SFTTrainer"), il interroge LiveDocs :
+## **🚀 Key Features**
 
-```python
-# Exemple d'appel interne par l'Agent Code
-response = requests.post("http://localhost:5000/api/search", json={
-    "query": "SFTTrainer configuration QLoRA",
-    "k": 3
-})
-# Résultat : Injection immédiate de la classe SFTConfig (TRL v0.8+) dans le prompt
-```
+| Feature | Description |
+| :---- | :---- |
+| ✅ **Anti-Obsolescence** | Forces the LLM to use 2024/2025 syntaxes |
+| ✅ **Auto-Healing** | If a library changes, simply re-run the scraping script; no need to touch the LLM |
+| ✅ **Performance** | Decoupled search, does not impact GPU VRAM dedicated to inference |
+| ✅ **Debug Interface** | Dedicated web UI on http://localhost:5000 to verify what the AI "knows" |
 
----
+## **📊 Impact on the SecondMind Project**
 
-## 🚀 Fonctionnalités Clés
+**Before LiveDocs RAG integration:**
 
-| Fonctionnalité | Description |
-|----------------|-------------|
-| ✅ **Anti-Obsolescence** | Force le LLM à utiliser les syntaxes 2024/2025 |
-| ✅ **Auto-Healing** | Si une librairie change, il suffit de relancer le script de scraping, pas besoin de toucher au LLM |
-| ✅ **Performance** | Recherche découplée, n'impacte pas la VRAM du GPU dédiée à l'inférence |
-| ✅ **Interface de Debug** | UI web dédiée sur `http://localhost:5000` pour vérifier ce que l'IA "sait" |
+* The agent generated deprecated Pydantic V1 code **80% of the time** on complex structures.
 
----
+**After integration:**
 
-## 📊 Impact sur le Projet SecondMind
+* The agent generates valid Pydantic V2 code (model\_validator, field\_validator) **95% of the time**, as it has the exact example directly in its context.
 
-**Avant l'intégration de LiveDocs RAG :**
-- L'agent générait du code Pydantic V1 deprecated **80% du temps** sur des structures complexes
+## **🛠️ Installation & Startup**
 
-**Après l'intégration :**
-- L'agent génère du code Pydantic V2 valide (`model_validator`, `field_validator`) **95% du temps**, car il a l'exemple exact sous les yeux dans le contexte
+\# 1\. Install dependencies  
+pip install \-r requirements\_docs.txt
 
----
+\# 2\. Launch the server (via the unified launcher)  
+START\_SECONDMIND.bat  
+\# \-\> Launches the Doc server on port 5000  
+\# \-\> Launches the Main Brain on port 3000
 
-## 🛠️ Installation & Démarrage
+## **Data-Centric AI Approach**
 
-```bash
-# 1. Installation des dépendances
-pip install -r requirements_docs.txt
+This module demonstrates a **Data-Centric AI** approach: rather than asking the model to learn everything by heart, we provide it with the tools to verify its knowledge in real-time.
 
-# 2. Lancement du serveur (via le launcher unifié)
-START_SECONDMIND.bat
-# -> Lance le serveur Doc sur le port 5000
-# -> Lance le Cerveau Principal sur le port 3000
-```
-
----
-
-## Approche Data-Centric AI
-
-Ce module démontre une approche **Data-Centric AI** : plutôt que de demander au modèle d'apprendre par cœur, on lui fournit les outils pour vérifier ses connaissances en temps réel.
-
----
-
-*Maxime Gagné — Architecte Cognitif — SecondMind*
+*Maxime Gagné — Cognitive Architect — SecondMind*
