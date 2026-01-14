@@ -85,7 +85,7 @@ This system evolved through rapid iterations, moving from a purely symbolic engi
 [🔍 Project Origin: From Symbolic Brain to LLMs > Discover how SecondMind originated as a deterministic architecture (ConceptNet, Lesk, CFG) before integrating probabilistic models.](./README_symbolic_pipeline.md)
 
 ---
-
+⚠️ **IMPORTANT**
 >
 >
 > **Note about source code access:** This repository follows an "Interface-Public / Core-Private" strategy.
@@ -191,26 +191,26 @@ The system doesn't rely on a single prompt but on task delegation. It employs a 
 
 ![Agent table](Images/tableau_des_dependences.drawio.png)
 
-#### 🤖 [Agent_Semi.py](Docs/agents/README_agent_Semi.md)
+#### 🤖 [Agent_Semi.py](Agentique/agent_Semi/agent_Semi.py) | [Spécifications](Docs/Agents/README_agent_Semi.md)
 **The official SEcondMInd agent, the orchestrator.**
 * **Primary responsibility**: It is the "Hub" of decision. It receives the user's intention and coordinates the other agents to build the final response.
 * **Philosophy**: Centralization of will, decentralization of execution.
 
-#### 🛡️ [Agent_Auditor.py](Docs/agents/README_agent_Auditor.md)
+#### 🛡️ [Agent_Auditor.py](Agentique/agent_Auditor/agent_Auditor.py) | [Spécifications](Docs/Agents/README_agent_Auditor.md)
 
 * **Primary responsibility**: Ensure technical integrity, code security and strict compliance with data contracts across the system.
 * **What it never does** :
     * It never modifies business logic or the decision-making behavior of other agents.
     * It never allows destructive actions on sanctified directories without proof of backup rotation.
 
-#### 💻 [Agent_Code.py](Docs/agents/README_agent_Code.md)
+#### 💻 [Agent_Code.py](Agentique/agent_Code/agent_Code.py) | [Spécifications](Docs/Agents/README_agent_Code.md)
 * **Primary responsibility**: Orchestrate access to source code intelligence via a hybrid search and indexing system to enable understanding of complex codebases.
 * **What it never does** :
     * It never runs unit tests or code in real time.
     * It never modifies source files directly.
     * It must never guess a code structure without querying the index.
 
-#### 🧠 [Agent_Contexte.py](Docs/agents/README_agent_Contexte.md)
+#### 🧠 [Agent_Contexte.py](Agentique/agent_Contexte/agent_Contexte.py) | [Spécifications](Docs/Agents/README_agent_Contexte.md)
 
 * **Primary responsibility**: Orchestrate retrieval, filtering and intelligent formatting of context (memory, rules and history) to prevent conversational amnesia.
 * **What it never does** :
@@ -218,7 +218,7 @@ The system doesn't rely on a single prompt but on task delegation. It employs a 
     * It never makes a final decision on the user's response.
     * It must never invent rules not present in the system.
 
-#### ⚖️ [Agent_Juge.py](Docs/agents/README_agent_Juge.md)
+#### ⚖️ [Agent_Juge.py](Agentique/agent_Juge/agent_Juge.py) | [Spécifications](Docs/Agents/README_agent_Juge.md)
 
 * **Primary responsibility**: Evaluate quality and factual reliability of system information acting as an unforgiving arbiter of relevance and coherence.
 * **What it never does** :
@@ -226,7 +226,7 @@ The system doesn't rely on a single prompt but on task delegation. It employs a 
     * It never generates conversational responses intended for the end user.
     * It must never soften a negative verdict for politeness.
 
-#### 🔎 [Agent_Recherche.py](Docs/agents/README_agent_Recherche.md)
+#### 🔎 [Agent_Recherche.py](Agentique/agent_Recherche/agent_Recherche.py) | [Spécifications](Docs/Agents/README_agent_Recherche.md)
 
 * **Primary responsibility**: Locate and extract any relevant information (memory, code, web) with near-instant performance to feed the system's reasoning.
 * **What it never does** :
@@ -234,7 +234,7 @@ The system doesn't rely on a single prompt but on task delegation. It employs a 
     * It never generates content without sources (it's an evidence agent).
     * It must never guess a file's content without explicitly reading it.
 
-#### 🔄 [Agent_Reflexor.py](Docs/agents/README_agent_Reflexor.md)
+#### 🔄 [Agent_Reflexor.py](Agentique/agent_Reflexor/agent_Reflexor.py) | [Spécifications](Docs/Agents/README_agent_Reflexor.md)
 
 * **Primary responsibility**: Analyze incidents and user feedback to ensure behavioral self-correction and continuous improvement.
 * **What it never does** :
@@ -242,7 +242,7 @@ The system doesn't rely on a single prompt but on task delegation. It employs a 
     * It never directly modifies executing agents without passing through reflexive logging.
     * It must never erase or hide the system's mistakes.
 
-#### 📝 [Agent_Parole.py](Docs/agents/README_agent_Parole.md)
+#### 📝 [Agent_Parole.py](Agentique/agent_Parole/agent_Parole.py) | [Spécifications](Docs/Agents/README_agent_Parole.md)
 
 * **Primary responsibility**: Build the final ChatML prompt by dynamically assembling system variables, user profile, and business context to guide the LLM.
 * **What it never does** :
@@ -250,7 +250,7 @@ The system doesn't rely on a single prompt but on task delegation. It employs a 
     * It never communicates directly with the LLM engine.
     * It must never change the tone or identity of Semi.
 
-#### 🎓 [Agent_Entraineur.py](Docs/agents/README_agent_Entraineur.md)
+#### 🎓 [Agent_Entraineur.py](Agentique/agent_Entraineur/agent_Entraineur.py) | [Spécifications](Docs/Agents/README_agent_Entraineur.md)
 
 * **Primary responsibility**: Oversee system learning by merging datasets and training intention classifiers (SBERT).
 * **What it never does** :
@@ -258,7 +258,7 @@ The system doesn't rely on a single prompt but on task delegation. It employs a 
     * It never deploys models if validation accuracy is insufficient.
     * It must never be used for real-time intention classification.
 
-#### 💾 [Agent_Memoire.py](Docs/agents/README_agent_Memoire.md)
+#### 💾 [Agent_Memoire.py](Agentique/agent_Memoire/agent_Memoire.py) | [Spécifications](Docs/Agents/README_agent_Memoire.md)
 
 * **Primary responsibility**: Autonomously manage the lifecycle of persistent memory ensuring capture, storage and indexing of all system data.
 * **What it never does** :
@@ -651,3 +651,4 @@ Beyond AI, SecondMind shows deep mastery of complex software systems:
   <blockquote>
     🔒 <b>Private repo access:</b> To review the full source code (Core Logic), please send me a request via LinkedIn or email specifying your organization.
   </blockquote>
+
