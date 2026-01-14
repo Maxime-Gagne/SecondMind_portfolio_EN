@@ -1,0 +1,909 @@
+# SQUELETTE DES SCRIPTS DU SYSTÈME
+
+📄 agentique.Semi.agent_Semi (D:\rag_personnel\agentique\Semi\agent_Semi.py)
+  class AgentSemi(AgentBase):
+    def __init__(self, get_cache=None, get_lock=None, socketio=None):
+    def _initialiser_outils_systeme(self):
+    def _initialiser_moteurs(self):
+    def _initialiser_sous_agents(self):
+      """Initialise les agents cognitifs avec injection de dépendances.
+L'ordre est critique pour les dépendances circulaires."""
+    def _initialiser_rag_code(self):
+      """Initialise l'adaptateur de recherche de code (Optionnel)."""
+    def _setup_callbacks_viewer(self):
+      """Configure le callback pour le Prompt Viewer (SocketIO)."""
+    def _initialiser_etat_session(self):
+      """Initialise les variables d'état de session."""
+    def _lancer_processus_demarrage(self):
+      """Lance les processus de gouvernance, continuité et maintenance."""
+    def penser(self, prompt: str, interaction_id: str=None, session_id: str=None, message_turn: int=None, stream: bool=False, search_mode: str='auto', historique_brut: Optional[List[str]]=None, enable_thinking: bool=False):
+      """Génère une réponse avec monitoring de performance en temps réel, orchestrant
+le pipeline cognitif d'AgentSemi."""
+    def _gerer_commandes_systeme(self, prompt: str, stream: bool) -> Optional[Dict]:
+      """[ATOME] Gère les commandes système (+1, -1) et les protocoles (!!!).
+Si une action coupe le flux normal, retourne immédiatement le résultat (yield)."""
+    def _handle_forced_search(self, prompt: str, search_mode: str) -> Optional[Any]:
+      """Gère le mode de recherche forcée (Web uniquement).
+Redirige vers le module Deep Research de l'AgentRecherche."""
+    def _enqueteur_autonome(self, prompt: str, intention: ResultatIntention) -> List[str]:
+      """Décide SI une enquête est nécessaire, et si oui, l'exécute.
+Combine l'intention SBERT et les mots-clés forcés."""
+    def post_traitement_async(self, prompt: str, reponse: str, standard_prompt: StandardPrompt, interaction_id: str, session_id: str, message_turn: int):
+      """Post-traitement asynchrone après génération de la réponse."""
+    def _verifier_batch_au_demarrage(self):
+      """Vérifie si le traitement batch différé doit être lancé au démarrage.
+Se déclenche si le dernier run date de plus de 45h ou n'existe pas."""
+    def _lancer_batch_async(self):
+      """Lance le traitement batch (consolidation mémoire) dans un thread séparé.
+Appelé par _verifier_batch_au_demarrage."""
+    def consulter_architecture_et_code(self, question: str) -> str:
+      """Outil critique : À utiliser dès que tu dois répondre à une question sur 
+le fonctionnement interne, le code, les fichiers ou l'architecture du projet.
+Permet de lire le code source réel du projet.
+
+Args:
+    question (str): La question technique précise (ex: "Comment fonctionne agent_Memoire ?")
+
+Returns:
+    str: Un résumé contextuel contenant les bouts de code pertinents."""
+    def _rebuild_faiss_code_index(self):
+      """Reconstruit l'index FAISS du code après ajout de nouveaux artefacts.
+Lit le fichier code_chunks.jsonl et crée des objets ContexteCode robustes."""
+    def _exec_update_system_summary(self, new_content: str) -> str:
+      """[MUSCLE] Écrase le fichier etat_systeme_resume.md.
+FORCE la date de mise à jour système réelle."""
+    def _detecter_et_executer_function_call(self, response: str) -> Optional[Dict]:
+      """Détecte et exécute un function call"""
+    def actualiser_resume_systeme(self):
+      """Lit l'historique et le TODO (situés dans le dossier de l'agent Semi) 
+et génère le fichier 'etat_systeme_resume.md'.
+Utilise l'Auditor pour résoudre les chemins de manière absolue."""
+    def _format_manual_context(self, manual_context: List[Dict]) -> str:
+      """Formate le contexte manuel des slots en string pour agent_Parole"""
+    def obtenir_etat_cognitif(self) -> Dict[str, Dict]:
+      """Collecte les statistiques de tous les sous-agents pour synchronisation.
+
+Returns:
+    Dict avec les stats de chaque agent au format:
+    {
+        "AgentMemoire": {
+            "appels_total": int,
+            "erreurs_total": int,
+            "temps_moyen_ms": float,
+            "stats_specifiques": dict
+        },
+        ...
+    }"""
+
+📄 agentique.Semi.classes_cognitives.intention_detector (D:\rag_personnel\agentique\Semi\classes_cognitives\intention_detector.py)
+  class ClassifierHead(torch.nn.Module):
+    """Classe PyTorch qui doit matcher exactement le modèle du script d'entraînement.
+(SBERT -> Embedding -> MLP 256 -> nb_labels)"""
+    def __init__(self, emb_dim: int, nb_labels: int):
+    def forward(self, x):
+  class IntentionDetector(AgentBase):
+    """IntentionDetector v4 — SBERT + 3 classifieurs PyTorch
+Piloté EXCLUSIVEMENT par le YAML.
+Zéro hardcode."""
+    def __init__(self):
+    def _load_classifier_weights(self):
+    def _construire_contexte(self, prompt: str, historique: Optional[List[str]]):
+    def intention_detector(self, prompt: str, historique_brut: Optional[List[str]]=None) -> ResultatIntention:
+
+📄 agentique.Semi.outils_de_test.intention_detector_label_map_generator (D:\rag_personnel\agentique\Semi\outils_de_test\intention_detector_label_map_generator.py)
+  def enum_to_dict(enum_cls):
+  def main():
+
+📄 agentique.Semi.outils_de_test.labo_architecte (D:\rag_personnel\agentique\Semi\outils_de_test\labo_architecte.py)
+
+📄 agentique.Semi.outils_de_test.test_diagnostic_semi (D:\rag_personnel\agentique\Semi\outils_de_test\test_diagnostic_semi.py)
+
+📄 agentique.Semi.outils_de_test.test_imports_agent_semi (D:\rag_personnel\agentique\Semi\outils_de_test\test_imports_agent_semi.py)
+  def test_file_existence():
+    """Teste l'existence des fichiers Python"""
+  def test_individual_imports():
+    """Teste chaque import individuellement"""
+  def test_agent_semi_import():
+    """Teste l'import d'AgentSemi complet"""
+  def test_agent_semi_initialization():
+    """Teste l'initialisation d'AgentSemi"""
+  def main():
+    """Fonction principale de test"""
+
+📄 agentique.base.META_agent (D:\rag_personnel\agentique\base\META_agent.py)
+  class MemoireTravailRAM():
+    """Memoire RAM - Version complète avec toutes les méthodes"""
+    def __new__(cls):
+    def ajouter_travail(self, item: dict) -> bool:
+    def recuperer_travail(self) -> list[dict]:
+    def remplacer_travail(self, nouveaux_items: list[dict]) -> bool:
+    def evaluer_travail(self, items_valides: list[dict]) -> bool:
+      """COPIÉ TEL QUEL depuis AgentMemoire"""
+    def obtenir_stats_travail(self) -> dict:
+      """Retourne les statistiques de la mémoire RAM."""
+    def vider_travail(self) -> int:
+  class MetaAgent(type):
+    """Métaclasse qui injecte les outils ET le monitoring automatique."""
+    def __call__(cls, *args, **kwargs):
+    def @staticmethod
+      """Crée un wrapper qui loggue les appels et les erreurs automatiquement."""
+    def @staticmethod
+    def @staticmethod
+  class AgentBase():
+    """Classe de base optionnelle pour les agents
+Hériter de cette classe applique automatiquement MetaAgent"""
+    def __init__(self, nom_agent: str=None):
+      """Initialisation de base
+Le nom sera extrait automatiquement si non fourni"""
+
+📄 agentique.base.auditor_base (D:\rag_personnel\agentique\base\auditor_base.py)
+  class StandardsAgents():
+    """Standards RÉELS extraits des agents existants
+Pas de suggestions, uniquement ce qui existe"""
+  class AuditorBase():
+    """Classe d'audit - NE CRÉE AUCUN DOSSIER
+Vérifie seulement l'existence"""
+    def __init__(self, nom_agent: str):
+    def get_config(self) -> Dict[str, Any]:
+      """Retourne la config pour cet agent"""
+    def get_path(self, path_type: str, nom_agent: Optional[str]=None) -> Optional[str]:
+      """CORRIGÉ : Récupère un chemin configuré en utilisant la structure StandardsAgents."""
+    def chemin_existe(self, type_path: str) -> bool:
+      """Vérifie si un chemin existe SANS le créer"""
+    def get_param(self, nom_param: str, defaut: Any=None) -> Any:
+      """Récupère un paramètre de configuration"""
+    def get_formats_entree(self) -> List[str]:
+      """Retourne les formats d'entrée acceptés"""
+    def get_formats_sortie(self) -> List[str]:
+      """Retourne les formats de sortie produits"""
+    def get_stats_specifiques(self) -> List[str]:
+      """Retourne la liste des stats spécifiques à tracker"""
+    def valider_format_entree(self, data: Any) -> bool:
+      """Valide le format d'entrée"""
+    def valider_format_sortie(self, data: Any) -> bool:
+      """Valide le format de sortie"""
+    def valider_echange(self, data: Any, agent_destination: str) -> bool:
+      """Valide un échange de données vers un autre agent
+
+Args:
+    data: Données à envoyer
+    agent_destination: Nom de l'agent destinataire
+    
+Returns:
+    True si l'échange est valide"""
+  class AuditorGlobal():
+    """Singleton pour accès global aux standards"""
+    def __new__(cls):
+
+📄 agentique.base.cognitive_logger (D:\rag_personnel\agentique\base\cognitive_logger.py)
+  class CognitiveLogger():
+    def __init__(self, nom_agent=None, session_id=None, console_output=True, auditor=None):
+      """CORRECTION: Utiliser l'auditor pour obtenir les chemins de logs"""
+    def _log_to_handlers(self, level, console_msg, json_msg, exc_info=False):
+      """CORRECTION: Gestion propre des logs avec le logger standard Python"""
+    def log_interaction(self, role, message, context='main'):
+    def log_api_call(self, engine, prompt, response_json):
+    def log_thought(self, thought_text):
+    def log_error(self, error_msg, exc_info=False):
+    def log_warning(self, warning_msg):
+      """Méthode ajoutée pour la compatibilité"""
+    def info(self, message):
+      """Compatibilité avec logging standard"""
+    def _now(self):
+    def set_correlation_id(self):
+      """Génère un ID de corrélation unique"""
+    def signal_gouvernance(self, message: str):
+      """Log un événement de gouvernance de haute priorité (ex: '!!!').
+Nous utilisons log_error en interne pour lui donner une haute visibilité."""
+
+📄 agentique.base.config_paths (D:\rag_personnel\agentique\base\config_paths.py)
+  def find_project_root(marker: str='.project_root') -> Path:
+    """Trouve la racine du projet en cherchant un fichier marqueur."""
+
+📄 agentique.base.contrats_interface (D:\rag_personnel\agentique\base\contrats_interface.py)
+  class FlexibleEnum(Enum):
+    def @classmethod
+  class Sujet(EnumFlexible):
+  class Action(EnumFlexible):
+  class Categorie(EnumFlexible):
+  class TypeMemoire(Enum):
+    """Types de mémoire"""
+  class SearchMode(Enum):
+    """Modes de recherche pilotés EXCLUSIVEMENT par l'interface frontend.
+L'IA n'a pas le droit d'initier une recherche d'elle-même."""
+  class CustomJSONEncoder(json.JSONEncoder):
+    """Encodeur universel pour Dataclasses et Enums."""
+    def default(self, o):
+  class MetadataFichier():
+    """PERSISTANT : Infos contextuelles conservées dans l'ARCHIVE.
+Contient TOUT ce qui n'est pas le texte de la conversation."""
+  class MetadataPipeline():
+    """VOLATILE : Infos de performance et de debug.
+Envoyé dans les logs de Semi, ne pollue pas la mémoire long terme."""
+  class Souvenir():
+    """ATOME 2 : Sortie unifiée de l'AgentRecherche.
+Le plus petit dénominateur commun de la mémoire."""
+  class ModificateursCognitifs():
+    """ATOME 3 : Configuration venant de l'UI"""
+  class ResultatIntention():
+    """SORTIE DE : IntentionDetector
+Ce qu'il rend au système après analyse."""
+  class ResultatRecherche():
+    """SORTIE DE : AgentRecherche
+Ce qu'il rend après avoir fouillé (Whoosh/Vectoriel)."""
+  class ResultatRechercheWeb():
+  class ResultatContexte():
+    """SORTIE DE : AgentContexte
+Ce qu'il rend après avoir trié et organisé la mémoire."""
+  class ResultatJuge():
+    """SORTIE DE : AgentJuge
+Ce qu'il rend après avoir évalué la réponse."""
+  class Interaction():
+    """L'Objet final sauvegardé sur le disque (JSON)."""
+  class ContexteCode():
+    """ATOME CODE : Format standard pour injection de contexte code.
+Structure sémantique remplaçant les chunks textuels bruts.
+Compatible avec le système +1/-1 de Semi."""
+  class AnalyseContenu():
+    """Structure détaillée de l'analyse d'un code (AST)"""
+  class ArtefactCode():
+    """ATOME : Objet de transit pour un snippet ou fichier analysé.
+C'est ce que produit RechercheCodeExtractor."""
+  class StandardPrompt():
+    """Recette 1 : Chat Standard.
+Structure aplatie pour un accès direct aux composants du prompt."""
+  class NewChatPrompt():
+    """Premier message d'un nouveau chat.
+Utilisé lorsque Semi détecte un salut ou qu'une commande système
+déclenche un redémarrage cognitif du dialogue.
+
+Ce prompt remplace le contexte normal : il injecte uniquement :
+- les règles actives
+- l'historique récent condensé
+- le résumé système global"""
+  class WebSearchPrompt():
+    """Recette 2 : Recherche Web Forcée.
+Contient uniquement la query et les résultats bruts."""
+  class ProtocolePrompt():
+    """Recette 4 : Protocole d'Intervention ALERTE (!!!).
+Remplace le System Prompt standard par le protocole de sécurité."""
+  class StatsBase():
+    def incrementer_appel(self) -> None:
+    def incrementer_erreur(self) -> None:
+    def ajouter_stat_specifique(self, nom: str, valeur_initiale: Any=0) -> None:
+    def incrementer_stat_specifique(self, nom: str, increment: int=1) -> None:
+    def definir_stat_specifique(self, nom: str, valeur: Any) -> None:
+      """Définit ou remplace la valeur d'une statistique spécifique."""
+    def obtenir_stat_specifique(self, nom: str, defaut: Any=None) -> Any:
+      """Récupère la valeur d'une statistique spécifique."""
+    def existe_stat_specifique(self, nom: str) -> bool:
+      """Vérifie si une statistique spécifique existe."""
+    def obtenir_statistiques(self) -> Dict[str, Any]:
+    def obtenir_resume(self) -> str:
+    def reinitialiser(self) -> None:
+    def @property
+
+📄 agentique.base.gardien_projet (D:\rag_personnel\agentique\base\gardien_projet.py)
+  class GardienHandler(FileSystemEventHandler):
+    def __init__(self):
+    def charger_project_map(self):
+      """Charge dynamiquement la liste des fichiers à surveiller depuis project_map.json."""
+    def on_modified(self, event):
+    def auditer_si_necessaire(self, file_path: Path):
+      """Déclenche l'audit pour les fichiers critiques"""
+  class GardienProjet():
+    def __init__(self):
+    def synchroniser_stats_periodique(self):
+      """Synchronise les stats via l'API backend toutes les 5 minutes"""
+    def start(self):
+    def stop(self):
+
+📄 agentique.base.monitoring.tracer (D:\rag_personnel\agentique\base\monitoring\tracer.py)
+  class AgentTracer():
+    """Gestionnaire de tracing pour les agents"""
+    def __init__(self, logger, actif: bool=True):
+      """Args:
+    logger: Instance de CognitiveLogger (gardé pour compatibilité)
+    actif: Active/désactive le tracing"""
+    def trace_call(self, func: Callable) -> Callable:
+      """Decorator qui trace automatiquement les appels de fonction
+
+Usage:
+    @tracer.trace_call
+    def ma_fonction(self, arg1, arg2):
+        pass"""
+    def activer(self):
+      """Active le tracing"""
+    def desactiver(self):
+      """Désactive le tracing"""
+
+📄 agentique.base.trace_request (D:\rag_personnel\agentique\base\trace_request.py)
+  def trace_correlation_id(correlation_id):
+    """Affiche tous les logs d'une requête spécifique"""
+
+📄 agentique.base.utils_text (D:\rag_personnel\agentique\base\utils_text.py)
+  class EnumFlexible(Enum):
+    """Classe Mère pour TOUS tes Enums (Sujet, Action, Categorie).
+Elle permet de trouver une valeur peu importe les accents."""
+    def @classmethod
+  def standardiser(texte):
+    """Fonction ULTIME pour nettoyer du texte.
+Transforme: "Général", "GENERAL", "General", " gEnErAl " 
+En: "general""""
+  def comparer(texte1, texte2):
+    """Utilise ça partout à la place de '=='
+Renvoie True si les textes sont équivalents (sans accents/casse)"""
+
+📄 agentique.base.version_tracker (D:\rag_personnel\agentique\base\version_tracker.py)
+  class VersionTracker():
+    def __init__(self, agent_code_extractor):
+      """Initialise le tracker.
+Il garde maintenant un registre interne des codes suggérés pour un accès instantané."""
+    def enregistrer_nouveau_code(self, bloc_code: Dict[str, Any], chemin_source: Path):
+      """CORRECTION MAJEURE : Méthode active pour enregistrer un nouveau code dès sa création.
+Doit être appelée par AgentSemi."""
+    def marquer_valide(self, hash_code: str, commentaire: str='Validé par +1') -> bool:
+      """CORRECTION MAJEURE : Marque un code comme valide en utilisant le registre interne.
+C'est maintenant beaucoup plus rapide et fiable."""
+    def obtenir_dernier_valide(self, pattern: str='') -> Optional[Dict]:
+      """Récupère la dernière version validée (inchangé)."""
+    def _load_index(self) -> Dict:
+    def _save_index(self):
+
+📄 agentique.sous_agents_gouvernes.agent_Auditor.agent_Auditor (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Auditor\agent_Auditor.py)
+  class ContractComplianceVisitor(ast.NodeVisitor):
+    """Vérifie que les instanciations de Dataclasses respectent la définition officielle."""
+    def __init__(self, definitions_contrats: Dict[str, Set[str]]):
+    def visit_Call(self, node):
+      """Détecte : MaClasse(arg1=..., arg2=...)"""
+  class FunctionHygieneVisitor(ast.NodeVisitor):
+    """Analyse l'hygiène interne des fonctions.
+[MODIFIE] : Ne vérifie plus la complexité (Refactor suggéré).
+Vérifie uniquement les variables mortes (Dead Code)."""
+    def __init__(self):
+    def visit_FunctionDef(self, node):
+      """Analyse une fonction spécifique isolément."""
+  class ShadowComplianceVisitor(ast.NodeVisitor):
+    """POLICE DE STANDARDISATION :
+Détecte les dictionnaires manuels qui ressemblent étrangement à des Dataclasses existantes.
+But : Forcer l'utilisation des objets standards."""
+    def __init__(self, definitions_contrats: Dict[str, Set[str]]):
+    def _analyser_dictionnaire(self, node_dict: ast.Dict, contexte: str):
+      """Compare les clés d'un dictionnaire AST avec les définitions officielles."""
+    def visit_Return(self, node):
+      """Vérifie si on retourne un dictionnaire manuel au lieu d'un objet."""
+    def visit_Assign(self, node):
+      """Vérifie si on assigne un dictionnaire manuel imitant un objet."""
+  class AgentAuditor(AgentBase):
+    def __init__(self):
+    def _charger_config(self) -> Dict:
+    def _construire_definitions_contrats(self) -> Dict[str, Set[str]]:
+      """Construit un dictionnaire : { 'NomClasse': {'champ1', 'champ2'} }
+C'est la SEULE source de vérité."""
+    def auditer_compliance_contrats(self, fichier: Path) -> List[str]:
+      """Vérifie si les contrats sont correctement instanciés.
+Plus besoin de whitelist."""
+    def _construire_vocabulaire_contrats(self) -> Set[str]:
+      """Scanne contrats_interface.py pour extraire tous les noms de champs valides.
+C'est la référence absolue."""
+    def _signaler_au_gardien(self, message: str, niveau: str):
+      """Communication directe avec le Gardien si une règle critique est violée."""
+    def auditer_hygiene_interne(self, fichier: Path) -> List[str]:
+      """Nouveau module : Vérifie la propreté interne des fonctions (Code mort).
+NOTE: Ne vérifie plus la complexité cognitive."""
+    def auditer_securite_fichier(self, fichier: Path) -> List[str]:
+      """Vérifie les accès disques interdits et patterns dangereux."""
+    def auditer_standardisation(self, fichier: Path) -> List[str]:
+      """Vérifie si le code utilise bien les standards au lieu de bricoler."""
+    def auditer_conformite_structurelle(self, fichier: Path) -> List[str]:
+      """Vérifie l'héritage et les imports."""
+    def generer_cartographie(self) -> str:
+      """Génère la map pour le LLM en respectant STRICTEMENT les exclusions du config.yaml."""
+    def _charger_stats_agent(self, nom_agent_clean: str) -> Dict:
+      """Charge la section 'dashboard_stats' du fichier config d'un agent.
+Tente de localiser le fichier config de manière robuste."""
+    def auditer_coherence_flux(self) -> List[str]:
+      """Vérifie la logique métier : Est-ce que ce qui est produit est bien stocké ?
+Compare les compteurs d'appels entre le Moteur LLM et la Mémoire."""
+    def auditer_systeme(self, mode='sanity_check') -> Dict:
+      """Lance l'audit complet (Sécurité + Structure + Flux)."""
+
+📄 agentique.sous_agents_gouvernes.agent_Auditor.test_de_securite_backend (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Auditor\test_de_securite_backend.py)
+  class TestPathTraversal():
+    """Tests de sécurité contre les attaques Path Traversal"""
+    def test_path_traversal_formation_data(self, client):
+      """Vérifie que ../../../ ne permet pas de sortir du dossier"""
+    def test_path_traversal_serve_html(self, client):
+      """Vérifie la route /<filename>"""
+    def sanitize_filename(nom: str) -> str:
+      """Nettoie un nom pour usage dans un chemin de fichier"""
+    def test_sanitize_filename():
+      """Vérifie que les caractères dangereux sont retirés"""
+    def test_cors_origine_non_autorisee(self, client):
+      """Vérifie que les origines externes sont bloquées"""
+    def test_rate_limiting_command(self, client):
+      """Vérifie que le rate limit bloque après X requêtes"""
+
+📄 agentique.sous_agents_gouvernes.agent_Contexte.agent_Contexte (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Contexte\agent_Contexte.py)
+  class AgentContexte(AgentBase):
+    """Gère la récupération et le filtrage du contexte mémoire.
+Orchestre AgentRecherche et formate les résultats."""
+    def __init__(self, agent_recherche: 'AgentRecherche', agent_juge: 'AgentJuge'):
+    def _charger_config(self) -> Dict:
+    def get_historique_chat(self) -> List[str]:
+      """Retourne l'historique conversationnel stocké par l'AgentContexte."""
+    def mettre_a_jour_historique(self, prompt: str, reponse: str):
+      """Ajoute une nouvelle interaction à l'historique de session et le Tronque."""
+    def get_historique_nouveau_chat(self, max_echanges: int=3) -> List[str]:
+      """Gouvernance : Règle impérative de continuité. 
+Récupère les derniers échanges de la mémoire persistante (via lecture du disque) 
+au début d'une nouvelle session pour assurer la continuité.
+
+Args:
+    max_echanges (int): Nombre maximal de paires P/R à charger.
+
+Returns:
+    List[str]: L'historique formaté comme une liste plate [P1, R1, P2, R2, ...]."""
+    def recuperer_contexte_intelligent(self, resultat_intention: ResultatIntention, resultat_recherche: ResultatRecherche) -> ResultatContexte:
+    def associer_regles_symboliques(self, prompt: str) -> List[str]:
+      """Associe des règles de gouvernance basées sur des mots-clés.
+Retourne une liste d'IDs (ex: ['R01_PasAnalogies'])."""
+    def _detecter_tags_categories(self, prompt: str) -> List[str]:
+      """Détecte si le prompt déclenche une catégorie entière de règles."""
+    def recuperer_protocole_alerte(self) -> str:
+      """Gouvernance : Récupère le contenu du fichier protocole_intervention_ALERTE.md."""
+    def get_historique_recent(self, limit: int=10) -> List[str]:
+      """Retourne les N derniers messages de l'historique RAM."""
+
+📄 agentique.sous_agents_gouvernes.agent_Entraineur.agent_Entraineur (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Entraineur\agent_Entraineur.py)
+  class ClassifierHead(nn.Module):
+    """Architecture du réseau de neurones (Doit matcher IntentionDetector)"""
+    def __init__(self, emb_dim: int, nb_labels: int):
+    def forward(self, x):
+  class IntentDataset(Dataset):
+    """Dataset PyTorch pour SBERT"""
+    def __init__(self, data, sbert_model, axe, label_map):
+    def __len__(self):
+    def __getitem__(self, idx):
+  class AgentEntraineur(AgentBase):
+    def __init__(self):
+    def _charger_config_sbert(self) -> Dict:
+      """Charge la config depuis le fichier de configuration du moteur MiniLLM (qui contient la section Sbert)"""
+    def _fusionner_datasets(self) -> List[Dict]:
+      """Fusionne tous les fichiers JSONL disponibles."""
+    def _preparer_mapping_labels(self, axe: str) -> Dict[str, int]:
+      """Crée le mapping Label -> ID basé sur le fichier de config JSON."""
+    def entrainer_sur_disque(self, epochs: int=8, learning_rate: float=0.0001):
+      """Lance l'entraînement complet pour les 3 axes.
+Sauvegarde les fichiers .pth."""
+    def _entrainer_axe(self, axe: str, data: List[Dict], epochs: int, lr: float) -> float:
+      """Entraîne un classifieur spécifique (ex: Sujet)."""
+
+📄 agentique.sous_agents_gouvernes.agent_Entraineur.auto_dataset_builder (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Entraineur\auto_dataset_builder.py)
+  class AutoDatasetBuilder(AgentBase):
+    def __init__(self):
+    def _nettoyer_texte(self, texte: str) -> str:
+      """Nettoyage basique : espaces, sauts de ligne excessifs."""
+    def _est_qualifie(self, prompt: str, intention: Any) -> bool:
+      """Quality Gate : Décide si l'interaction mérite d'être apprise."""
+    def ajouter_interaction(self, interaction: Interaction, source: str='batch') -> bool:
+      """Convertit une Interaction en ligne de dataset et l'ajoute au fichier."""
+
+📄 agentique.sous_agents_gouvernes.agent_Entraineur.force_dataset_generation (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Entraineur\force_dataset_generation.py)
+  def main():
+
+📄 agentique.sous_agents_gouvernes.agent_Juge.agent_Juge (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Juge\agent_Juge.py)
+  class AgentJuge(AgentBase):
+    def __init__(self, agent_recherche, moteur_mini_llm=None):
+    def _load_config(self, config_path: str) -> Dict:
+      """Charge la configuration YAML de l'agent."""
+    def calculer_pertinence_semantique(self, prompt: str, souvenir_contenu: str, souvenir_titre: str, filtres_semantiques: List[Dict]) -> float:
+      """Calcule la pertinence en vérifiant le contenu ET le titre."""
+    def evaluer_coherence_reponse(self, contexte_rag_str: str, prompt: str, reponse: str) -> ResultatJuge:
+      """Évalue si la réponse est factuellement soutenue par le contexte RAG.
+CORRECTIF : Gère le cas où le contexte est vide (Abstention)."""
+    def _construire_prompt_juge(self, contexte_rag_str: str, prompt: str, reponse: str) -> str:
+      """Construit le prompt système pour forcer le Mini-LLM à agir en Juge."""
+    def _extraire_json_reponse(self, reponse_brute: str) -> Dict:
+    def _parser_reponse_juge(self, reponse_brute: str) -> ResultatJuge:
+      """Convertit la réponse textuelle du LLM en objet ResultatJuge structuré."""
+    def _mettre_a_jour_coherence_moyenne(self, nouveau_score: float):
+
+📄 agentique.sous_agents_gouvernes.agent_Memoire.agent_Memoire (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Memoire\agent_Memoire.py)
+  class AgentMemoire(AgentBase):
+    def __init__(self, agent_recherche: 'AgentRecherche', moteur_vectoriel: Optional['MoteurVectoriel']=None, root_dir: str=None, session_id: str=None):
+    def sauvegarder_memoire(self, contenu: Any, type_memoire: str, nom_fichier: str) -> bool:
+      """Méthode générique pour sauvegarder du contenu (Texte ou JSON) 
+dans un sous-dossier de la mémoire (persistante, reflexive, etc.).
+Utilisée par l'API pour l'injection manuelle et le feedback."""
+    def sauvegarder_interaction_brute(self, donnee_entree: Union[Interaction, str], contenu: str=None, session_id: str=None, message_turn: int=None, metadata: Dict=None) -> bool:
+      """Capture une interaction brute au format JSONL dans le dossier 'brute'.
+Méthode POLYMORPHE : S'adapte selon ce qu'on lui envoie."""
+    def memoriser_interaction(self, interaction_element: Interaction) -> bool:
+      """Sauvegarde le fichier JSON individuel dans 'historique'.
+C'est ce fichier qui sera lu plus tard par le Processeur Différé."""
+    def journaliser_trace_reflexive(self, trace_markdown: str, type_erreur: str, classification: str):
+    def sauvegarder_artefacts_code(self, artefacts: List[Dict]) -> bool:
+      """Reçoit les paquets préparés par l'Extracteur et les écrit sur le disque.
+Version compatible ContexteCode (Champs obligatoires)."""
+    def obtenir_statistiques(self) -> Dict[str, Any]:
+      """Retourne les statistiques de l'agent via le StatsManager."""
+    def _charger_etat_traitement(self) -> Dict:
+      """Charge ou crée un état minimal de traitement."""
+
+📄 agentique.sous_agents_gouvernes.agent_Memoire.moteur_vecteur (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Memoire\moteur_vecteur.py)
+  class MoteurVectoriel():
+    """Moteur de mémoire sémantique persistante basé sur FAISS.
+Chaque fragment est vectorisé et indexé avec ses métadonnées."""
+    def __init__(self, chemin_index: str | None=None, dim: int=384, model_name: str='all-MiniLM-L6-v2'):
+    def _sauvegarder_index(self):
+      """Sauvegarde l'index FAISS et les métadonnées sur disque."""
+    def _charger_index(self):
+      """Recharge l'index FAISS et les métadonnées si disponibles."""
+    def ajouter_fragment(self, texte: str, meta: dict | None=None) -> None:
+      """Ajoute un fragment + métadonnées dans l’index persisté."""
+    def rechercher(self, requete: str, top_k: int=5) -> list[dict]:
+      """Recherche sémantique et renvoie [{score, meta}]."""
+
+📄 agentique.sous_agents_gouvernes.agent_Memoire.traitement_brute_persistante (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Memoire\traitement_brute_persistante.py)
+  class ProcesseurBrutePersistante(AgentBase):
+    def __init__(self, llm_engine=None):
+    def _charger_etat(self) -> Dict:
+    def _sauver_etat(self):
+    def traiter_batch_differe(self):
+      """Point d'entrée principal."""
+    def _grouper_fichiers_par_session(self) -> Dict:
+      """Groupe les fichiers non traités par session_id"""
+    def _analyser_session_complete(self, messages: List[Dict], session_id: str) -> List[Interaction]:
+      """Envoie TOUTE la conversation au LLM et demande une sortie structurée bloc par bloc.
+Assure la cohérence de l'intention sur toute la ligne."""
+    def _extraire_intention_du_bloc(self, texte: str) -> ResultatIntention:
+      """Parse les tags Markdown en nettoyant les crochets éventuels"""
+    def _sauvegarder_resume(self, interaction: Interaction, data_brute: Dict) -> Path:
+    def _indexer_resume(self, interaction: Interaction, chemin: Path):
+
+📄 agentique.sous_agents_gouvernes.agent_Parole.agent_Parole (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Parole\agent_Parole.py)
+  class AgentParole(AgentBase):
+    """AgentParole - Constructeur de Prompt.
+Sa seule responsabilité est de créer le prompt ChatML final."""
+    def __init__(self, agent_contexte=None, agent_semi=None, get_cache=None, get_lock=None):
+    def _charger_config(self) -> dict:
+      """Charge la configuration YAML spécifique à AgentParole."""
+    def recuperer_instruction(self, cle: str) -> str:
+      """Accesseur public pour que Semi puisse logger/sauvegarder le system prompt utilisé."""
+    def _recuperer_scripts_skeleton(self) -> str:
+      """Lit le fichier scripts_skeleton.txt généré par l'AnalyseurCode.
+Source de vérité sur la structure du projet pour le LLM."""
+    def construire_prompt_llm(self, req: Union[StandardPrompt, WebSearchPrompt, ProtocolePrompt]) -> str:
+      """Méthode d'aiguillage pour les objets déjà construits.
+Note: Le 'NewChat' est géré à part via prompt_premier_chat."""
+    def _construire_prompt_standard(self, req: StandardPrompt) -> str:
+      """Assemble le prompt pour une interaction standard en respectant le contrat."""
+    def _construire_prompt_web_search(self, req: WebSearchPrompt) -> str:
+      """Assemble un prompt pour la recherche Web isolée."""
+    def _update_viewer(self, prompt_str, type_req):
+      """Mise à jour du cache pour le Prompt Viewer"""
+    def _extraire_contenu_liste(self, liste_objets: List[Any]) -> List[str]:
+      """Extrait le texte de Souvenirs ou retourne les strings brutes."""
+    def prompt_premier_chat(self, prompt_original: str) -> str:
+      """Méthode tout-en-un pour le nouveau chat : 
+1. Récupère les données et la Config.
+2. Crée l'objet NewChatPrompt (Logique).
+3. Formate le texte final (Visuel)."""
+    def _construire_prompt_protocole(self, req: ProtocolePrompt) -> str:
+      """Construit un prompt d'urgence où le Protocole remplace l'identité standard."""
+    def _formater_documentation(self, docs: List[Any]) -> str:
+      """En-tête DOCUMENTATION_UTILE"""
+    def _formater_regles(self, regles: List[Any]) -> str:
+      """En-tête RÈGLES"""
+    def _formater_contexte_memoire(self, souvenirs: List[Souvenir]) -> str:
+      """En-tête CONTEXTE MÉMOIRE (Max 6 éléments).
+Tente de parser le JSON pour extraire prompt/réponse/meta."""
+    def _formater_historique_inverse(self, historique: List[str]) -> str:
+      """En-tête HISTORIQUE DE CONVERSATION.
+Numéroté de 1 (Récent) à 6 (Vieux)."""
+    def _recuperer_resume_systeme(self) -> str:
+      """Récupère le contenu de 'etat_systeme_resume.md'.
+Utilise l'Auditor pour localiser le dossier de l'Agent Semi."""
+
+📄 agentique.sous_agents_gouvernes.agent_Parole.moteurs.moteur_llm (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Parole\moteurs\moteur_llm.py)
+  class MoteurLLM(AgentBase):
+    def __init__(self, perf_monitor=None):
+    def _load_config(self):
+    def _prepare_payload(self, prompt_text: str, stream: bool=False) -> dict:
+    def generer_stream(self, prompt_text: str) -> Generator[str, None, None]:
+    def generer(self, prompt_text: str) -> Dict:
+      """Génération non-streamée (standard)."""
+    def @property
+
+📄 agentique.sous_agents_gouvernes.agent_Parole.moteurs.moteur_mini_llm (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Parole\moteurs\moteur_mini_llm.py)
+  class MoteurMiniLLM(AgentBase):
+    """Client HTTP pour le Mini-LLM (ex: Phi-3 sur port 8081).
+Singleton conservé pour la gestion du Lock inter-threads."""
+    def __new__(cls, *args, **kwargs):
+    def __init__(self, config_file: str='config_moteur_mini_llm.yaml'):
+    def _prepare_payload(self, prompt: str, temperature: float=None, stream: bool=False) -> dict:
+    def generer_stream(self, prompt: str, temperature: float=None) -> Generator[str, None, None]:
+    def generer(self, prompt: str, temperature: float=None) -> Dict[str, Any]:
+    def @property
+
+📄 agentique.sous_agents_gouvernes.agent_Parole.moteurs.verifier_chargement_modeles (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Parole\moteurs\verifier_chargement_modeles.py)
+  def verifier():
+
+📄 agentique.sous_agents_gouvernes.agent_Recherche.agent_Recherche (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Recherche\agent_Recherche.py)
+  class AgentRecherche(AgentBase):
+    """AgentRecherche - Recherche performante dans la mémoire.
+Sortie : ResultatRecherche (Liste de Souvenirs + Métadonnées)
+
+Implémente une recherche performante dans la mémoire avec:
+- Pré-filtrage rapide via Everything (es.exe)
+- Recherche sémantique via Whoosh
+- Gestion de la classification des interactions"""
+    def __init__(self):
+    def _find_everything_exe(self) -> Optional[str]:
+      """Trouve Everything.exe sur le système"""
+    def _ensure_index_exists(self):
+      """Vérifie ou crée l'index Whoosh"""
+    def _creer_schema_whoosh(self):
+      """Crée le schéma et l'index"""
+    def recherche_web_profonde(self, objectif: str) -> str:
+      """Lance une recherche web itérative et profonde (Deep Research).
+Utilise l'outil 'RechercheWeb' injecté."""
+    def _definir_strategie_recherche(self, classification: Optional[ResultatIntention]) -> Dict[str, Any]:
+      """Définit la stratégie de recherche en priorisant les règles puis les mémoires générales."""
+    def rechercher_regles_par_tag(self, tag: str) -> List[Souvenir]:
+      """Scanne le dossier règles et retourne TOUTES les règles contenant le tag dans leur nom.
+Ex: tag="doc" -> R_002_doc_Valider.json"""
+    def rechercher_regles_par_ids(self, regles_ids: List[str]) -> List[Souvenir]:
+      """Récupère les règles via Everything dans un thread pour ne pas bloquer."""
+    def detecter_besoin_documentation(self, prompt: str) -> List[str]:
+      """Analyse le prompt pour trouver des correspondances avec les README disponibles.
+Logique: Match si ≥2 mots en commun (sauf si juste 'readme' + 'agent' → besoin 3e mot).
+Accepte majuscules/minuscules, espaces/underscores/sans-séparation."""
+    def _extraire_mots_normalises(self, texte: str) -> List[str]:
+      """Extrait les mots d'un texte en normalisant:
+- Lowercase
+- Remplace _ et espaces par rien
+- Supprime extensions (.md)
+- Filtre les mots vides (readme, agent, md)"""
+    def _valider_match(self, mots_communs: set) -> bool:
+      """Valide si un match est acceptable:
+- Au moins 2 mots en commun
+- Si seulement 'agent' est présent, besoin d'au moins 1 autre mot"""
+    def rechercher_documentation_technique(self, noms_fichiers: List[str]) -> List[Souvenir]:
+      """Recherche ultra-rapide via Everything uniquement.
+Pas de fallback manuel (trop lent)."""
+    def recherche_hybride(self, intention: ResultatIntention) -> ResultatRecherche:
+      """Exécute Vectoriel + Whoosh et fusionne via RRF en respectant la Stratégie de Priorité."""
+    def recherche_hybride_vectorielle(self, query_text: str, classification: Optional[ResultatIntention]=None, top_k: int=5) -> ResultatRecherche:
+      """Fusionne Whoosh (Lexical) et Vecteur (Sémantique).
+Retourne un ResultatRecherche."""
+    def recherche_whoosh_targeted(self, query_text: str, fichiers_candidats: List[str]=None, limit: int=10) -> List[Souvenir]:
+      """Effectue la recherche Whoosh et convertit les résultats en Souvenirs.
+Accepte maintenant un argument 'limit' pour le RRF."""
+    def update_index(self, contenu: str=None, type_memoire: str='persistante', sujet: str=None, action: str=None, categorie: str=None, session_id: str=None, message_turn: int=None, nouveau_fichier: str=None):
+      """Met à jour l'index Whoosh.
+- Si 'nouveau_fichier' est fourni : Mise à jour incrémentale (Rapide).
+- Si 'nouveau_fichier' est None : RECONSTRUCTION COMPLÈTE (Maintenance)."""
+    def rechercher_par_classification(self, sujet: Optional[Sujet]=None, action: Optional[Action]=None, categorie: Optional[Categorie]=None, tags: Optional[List[str]]=None, limite: int=20, depuis: Optional[datetime]=None) -> List[Dict]:
+      """Recherche sémantique dans la mémoire basée sur la classification.
+Implémente votre vision de "base de données sémantique".
+
+Args:
+    sujet: Filtrer par sujet (SECONDMIND, PSYCHOLOGIE, etc.)
+    action: Filtrer par action (FAIRE, PENSER, PARLER)
+    categorie: Filtrer par catégorie (CODER, ANALYSER, etc.)
+    tags: Liste de tags à rechercher
+    limite: Nombre max de résultats
+    depuis: Filtrer depuis une date
+
+Returns:
+    Liste des interactions correspondantes"""
+    def statistiques_semantiques(self, periode_jours: int=30) -> Dict[str, Any]:
+      """Génère des statistiques sur les interactions par classification.
+
+Args:
+    periode_jours: Période d'analyse en jours
+    
+Returns:
+    Dictionnaire avec statistiques détaillées"""
+    def exporter_donnees_semantiques(self, format_export: str='json') -> str:
+      """Exporte toutes les données de classification pour analyse externe.
+
+Args:
+    format_export: "json" ou "csv"
+    
+Returns:
+    Chemin du fichier exporté"""
+    def get_stats(self) -> Dict:
+      """Retourne les statistiques de l'index"""
+
+📄 agentique.sous_agents_gouvernes.agent_Recherche.recherche_web (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Recherche\recherche_web.py)
+  class RechercheWeb(AgentBase):
+    def __init__(self, moteur_llm):
+    def _generer_requetes(self, objectif: str, connaissances_actuelles: str='') -> List[str]:
+      """Génère des requêtes de recherche optimisées selon ce qu'on sait déjà."""
+    def _rechercher_urls(self, query: str) -> List[Dict]:
+      """Récupère les URLs via DuckDuckGo."""
+    def _scraper_url(self, url: str) -> str:
+      """Télécharge et nettoie le contenu d'une page Web."""
+    def _analyser_contenu(self, contenu: str, url: str, objectif: str) -> Dict:
+      """Demande au LLM d'évaluer la pertinence et d'extraire les infos.
+Retourne un dict {score, extraction, suffisance}."""
+    def executer_recherche_profonde(self, objectif: str) -> str:
+      """Lance la boucle de recherche itérative.
+Retourne une synthèse complète."""
+
+📄 agentique.sous_agents_gouvernes.agent_RechercheCode.RechercheCodeAdapter (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_RechercheCode\RechercheCodeAdapter.py)
+  class RechercheCodeAdapter(AgentBase):
+    """Adapter spécialisé pour le RAG de code.
+API stricte et minimale."""
+    def __init__(self):
+    def obtenir_contexte_code(self, question: str, top_k: int=8) -> Dict:
+      """Fonction principale.
+Retourne un dictionnaire contenant le contexte pertinent de code."""
+    def resumer_contexte(self, result: Dict, max_len: int=20000) -> str:
+      """Produit un résumé compact pour le LLM.
+Limite la taille globale, supprime ce qui dépasse."""
+    def fournir_contexte_a_semi(self, question: str, top_k: int=8) -> str:
+      """Interface haut-niveau :
+1. Recherche
+2. Compression
+3. Retourne texte prêt pour injection dans le prompt"""
+    def lire_fichier_source(self, nom_fichier: str) -> Optional[str]:
+      """Lit le contenu brut d'un fichier source pour l'injecter dans le contexte.
+Cherche le fichier à partir de la racine du projet."""
+
+📄 agentique.sous_agents_gouvernes.agent_RechercheCode.RechercheCodeExtractor (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_RechercheCode\RechercheCodeExtractor.py)
+  class RechercheCodeExtractor(AgentBase):
+    def __init__(self):
+    def traiter_reponse_llm(self, texte_original: str) -> Tuple[str, List[Dict]]:
+      """Analyse la réponse du LLM.
+Retourne :
+1. Le texte nettoyé (avec placeholders <ARTIFACT_CODE...>)
+2. Une liste de dictionnaires 'artefacts' prêts à être sérialisés en JSON."""
+    def analyser_fichier(self, filepath: str) -> Dict:
+      """Analyse un fichier physique.
+Utilisé par le Gardien et l'AnalyseurCode."""
+    def _analyser_contenu_code(self, content: str, langage: str, is_snippet: bool=False) -> Dict:
+    def _analyser_python_hybride(self, content: str, is_snippet: bool) -> AnalyseContenu:
+      """Structure de retour alignée sur le vocabulaire ContexteCode (classes, functions, etc.)"""
+    def _get_base_name(self, node) -> str:
+    def _analyser_javascript(self, content: str) -> AnalyseContenu:
+    def _analyser_html(self, content: str) -> AnalyseContenu:
+    def _analyser_css(self, content: str) -> AnalyseContenu:
+    def _analyser_json(self, content: str) -> AnalyseContenu:
+    def _analyser_generique(self, content: str) -> AnalyseContenu:
+    def _extraire_concepts(self, content: str, extension: str) -> List[str]:
+
+📄 agentique.sous_agents_gouvernes.agent_RechercheCode.agent_RechercheCode (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_RechercheCode\agent_RechercheCode.py)
+  class AgentRechercheCode(AgentBase):
+    def __init__(self):
+    def _charger_config(self) -> Dict:
+    def _charger_architecture(self) -> Dict:
+    def _indexer_chunks_offsets(self):
+      """OPTIMISATION RAM :
+Lit le fichier JSONL ligne par ligne et mémorise l'offset (position octet)
+de chaque chunk ID. Ne charge PAS le contenu en mémoire."""
+    def _get_chunk_content_by_id(self, chunk_id: str) -> Optional[Dict]:
+      """Récupère le contenu complet d'un chunk via son offset (Seek & Read).
+Très rapide et économe en mémoire."""
+    def _charger_faiss(self):
+    def _search_vector(self, query: str, top_k: int=8) -> List[Dict]:
+      """Recherche vectorielle → retourne les chunks complets (chargés à la demande)."""
+    def _trouver_modules_par_mots_cles(self, question: str) -> List[str]:
+      """Recherche symbolique (Noms de modules/classes/fonctions).
+Utilise l'architecture chargée en RAM (léger)."""
+    def _expand_dependencies(self, modules: List[str], depth: int=1) -> List[str]:
+      """Étend la sélection aux modules dépendants (via outgoing_edges)."""
+    def chercher_code(self, question: str, top_k: int=8) -> Dict:
+      """Orchestrateur principal RAG Code."""
+
+📄 agentique.sous_agents_gouvernes.agent_RechercheCode.outils.analyseur_de_code (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_RechercheCode\outils\analyseur_de_code.py)
+  class AnalyseurCode(AgentBase):
+    def __init__(self):
+    def _charger_config(self) -> Dict:
+    def _est_exclu(self, path_obj: Path) -> bool:
+      """Vérifie si le chemin complet contient un élément interdit.
+Analyse chaque partie du chemin (dossiers parents) et le nom du fichier."""
+    def _purger_artefacts(self):
+      """Supprime physiquement les anciens fichiers de sortie avant l'analyse.
+Garantit que les scripts supprimés du disque disparaissent aussi des index."""
+    def run(self):
+    def _generer_vue_squelette(self, arch: Dict[str, Any]) -> str:
+      """Génère une vue textuelle enrichie de la structure des scripts.
+Inclut signatures + docstrings pour chaque élément.
+Format optimisé pour l'injection dans le prompt LLM."""
+    def scanner_projet(self) -> Dict[str, Any]:
+    def _analyse_python_file(self, path: Path) -> Dict[str, Any]:
+      """Analyse enrichie avec extraction des appels et signatures"""
+    def _extraire_attributs_classe(self, class_node: ast.ClassDef) -> Dict[str, str]:
+      """Extrait les attributs d'instance depuis __init__ et les annotations.
+Retourne {"agent_parole": "AgentParole", ...}"""
+    def _deduire_type_depuis_valeur(self, value_node: ast.AST) -> Optional[str]:
+      """Déduit le type depuis une assignation (ex: AgentMemoire(...))"""
+    def _analyser_fonction(self, func_node: ast.FunctionDef, attributs_map: Dict[str, str]) -> Dict[str, Any]:
+      """Analyse complète d'une fonction avec :
+- Signature complète
+- Appels de fonctions (avec résolution self.xxx)
+- Type de retour"""
+    def _extraire_signature_complete(self, func_node: ast.FunctionDef) -> str:
+      """Extrait la signature complète avec annotations de types"""
+    def _analyser_appels_fonction(self, func_node: ast.FunctionDef, attributs_map: Dict[str, str]) -> List[Dict[str, Any]]:
+      """Extrait tous les appels de fonction avec résolution.
+
+Ex: self.agent_parole.construire_prompt_llm(...)
+  → {"module": "agent_parole", "function": "construire_prompt_llm", "line": 326}"""
+    def _resoudre_appel(self, call_node: ast.Call, attributs_map: Dict[str, str]) -> Optional[Dict[str, Any]]:
+      """Résout un appel de fonction.
+
+Exemples :
+- self.agent_parole.construire_prompt_llm() 
+  → {"module": "AgentParole", "function": "construire_prompt_llm"}
+
+- moteur_llm.generer_stream()
+  → {"module": "moteur_llm", "function": "generer_stream"}"""
+    def _extraire_type_retour(self, func_node: ast.FunctionDef) -> Optional[str]:
+      """Extrait le type de retour depuis l'annotation"""
+    def _extraire_variables_utilisees(self, func_node: ast.FunctionDef) -> List[str]:
+      """Extrait les attributs self.xxx utilisés dans la fonction"""
+    def _extract_types_from_args(self, args: ast.arguments) -> Dict[str, str]:
+    def generer_chunks(self, arch: Dict[str, Any]) -> List[ContexteCode]:
+      """Génère des chunks au format ContexteCode (dataclass standardisée)."""
+    def _extraire_concepts(self, text: str) -> List[str]:
+      """Extrait les concepts-clés depuis docstring/commentaires"""
+    def _generer_resume_fonction(self, func_info: Dict) -> str:
+      """Génère un résumé d'une ligne pour la fonction"""
+    def _read_text(self, path: Path) -> str:
+    def _safe_name(self, node: ast.AST) -> str:
+    def _module_name_from_path(self, py_path: Path) -> str:
+    def construire_index_vectoriel(self, chunks: List[ContexteCode]) -> None:
+      """Construit l'index FAISS à partir des chunks ContexteCode"""
+
+📄 agentique.sous_agents_gouvernes.agent_RechercheCode.outils.outil_cycle_de_dependances (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_RechercheCode\outils\outil_cycle_de_dependances.py)
+  def charger_architecture(path: Path=ARCH_PATH) -> Dict:
+  def construire_graphe_dep(arch: Dict) -> Dict[str, Set[str]]:
+    """Construit un graphe dirigé des dépendances entre modules.
+
+Les clés du graphe = noms complets des modules (agentique.Semi.agent_Semi)
+Les arêtes = module A -> module B (A dépend de B)"""
+  def trouver_cycles(graph: Dict[str, Set[str]]) -> List[List[str]]:
+    """Détection de cycles par DFS.
+Retourne une liste de cycles, chaque cycle étant une liste de modules."""
+  def afficher_cycles(cycles: List[List[str]]) -> None:
+  def valider_dependances() -> None:
+
+📄 agentique.sous_agents_gouvernes.agent_Reflexor.agent_Reflexor (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Reflexor\agent_Reflexor.py)
+  class AgentReflexor(AgentBase):
+    def __init__(self, agent_memoire: Optional['AgentMemoire']=None, moteur_llm: Optional['MoteurLLM']=None, moteur_vectoriel: Optional['MoteurVectoriel']=None, *args, **kwargs):
+      """Initialise avec agents injectés par Semi"""
+    def rechercher_cas_similaires(self, texte: str, top_k: int=5) -> List[Dict]:
+      """Recherche dans la mémoire vectorielle les interactions similaires."""
+    def _analyser_cause_erreur(self, prompt_erreur: str, historique: List[str], cas_similaires: List[Dict]) -> str:
+      """Phase 2 : Appel LLM n°1 ("Pourquoi l'utilisateur s'est fâché ?")
+Analyse l'historique pour trouver la cause racine de la frustration."""
+    def lancer_analyse_gouvernance(self, prompt_erreur: str, historique: List[str]):
+      """Orchestre la boucle réflexive complète suite à un signal '!!!'."""
+    def _formatter_trace_reflexive(self, cas_analyse: Dict, correction: str) -> str:
+    def creer_regle_auto_correction(self, cas_analyse: Dict) -> str:
+      """Génère la correction comportementale."""
+    def enregistrer_feedback_etendu(self, prompt: str, reponse: str, score: float, mot_cle: str='général') -> bool:
+      """Enregistre un feedback utilisateur étendu (+1 mémoire, +1 pertinence)."""
+
+📄 agentique.sous_agents_gouvernes.agent_Structure.agent_Structure (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Structure\agent_Structure.py)
+  class AgentStructure(AgentBase):
+    def __init__(self, rapport_path: Optional[Path]=None, config_path: Optional[Path]=None):
+    def generer_mapping(self):
+      """Génère le mapping via core_mapper"""
+    def rapport_recent(self) -> Dict[str, Any]:
+      """Retourne le dernier rapport"""
+    def obtenir_statistiques(self) -> Dict[str, Any]:
+      """Retourne des statistiques complètes de l'agent Structure"""
+
+📄 agentique.sous_agents_gouvernes.agent_Structure.core_mapper (D:\rag_personnel\agentique\sous_agents_gouvernes\agent_Structure\core_mapper.py)
+  def scan_structure(base_path):
+  def save_log(mapping):
+  def save_mapping(mapping):
+
+📄 agentique.test_filou (D:\rag_personnel\agentique\test_filou.py)
+  def test():

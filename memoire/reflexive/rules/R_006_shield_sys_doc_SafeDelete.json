@@ -1,0 +1,5 @@
+{
+  "id": "R006_shield_sys_doc_SafeDelete",
+  "type": "fichiers",
+  "regle": "All delete/write operations must be verified and logged with an explicit error message."
+}
