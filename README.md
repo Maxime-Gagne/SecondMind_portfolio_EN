@@ -88,14 +88,25 @@ This system evolved through rapid iterations, moving from a purely symbolic engi
 ⚠️ **IMPORTANT**
 >
 >
-> **Note about source code access:** This repository follows an "Interface-Public / Core-Private" strategy.
-
-> Public: Overall architecture, interface contracts, full technical documentation (READMEs) and unit test suites.
-
-> Private: Agents' business logic and neural implementations.
-
-The full source code is available for an in-depth technical review on request during the recruitment process.
-
+> **Note about source code access:**
+> To safeguard intellectual property while demonstrating architectural quality, I have made public the **3 fundamental pillars** of my governance system. Click to view the source code:
+>
+> 1. 🛠️ **[META_agent.py (Metaprogramming)](metabase/META_agent.py)**
+>    *Implementation of automatic dependency injection and auto-instrumentation (Zero-Boilerplate).*
+>
+> 2. 🛡️ **[auditor_base.py (Static Analysis / AST)](metabase/auditor_base.py)**
+>    *Governance engine that validates code integrity and prevents technical debt at runtime.*
+>
+> 3. 📜 **[contrats_interface.py (Strict Typing)](metabase/contrats_interface.py)**
+>    *Definition of inter-agent communication protocols ensuring system consistency.*
+>
+> *The rest of the core logic (Neural Agents, Tri-Engine RAG) is maintained in a private repository but is available for technical audit upon request.*
+>
+> **Public:** Global architecture, interface contracts, complete technical documentation (READMEs), and unit test suites.
+>
+> **Private:** Agent business logic and neural implementations.
+>
+> The complete source code is available for a deep technical review upon request during the recruitment process.
 
 <details>
 <summary><b>📬 Contact</b></summary>
