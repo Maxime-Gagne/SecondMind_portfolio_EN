@@ -115,11 +115,6 @@ This system evolved through rapid iterations, moving from a purely symbolic engi
 </div>
 
 
-
-*Six months ago I had no coding or AI experience. Today, SecondMind is my cognitive architecture lab: a complete multi-agent system, governed and reflexive, running locally on an RTX 3090 with a 130k token context.*
-
----
-
 <div align="center"> <img src="Images/interface_de_chat.png" width="900" alt="Chat Interface"> </div>
 
 ---
