@@ -174,72 +174,37 @@ The system doesn't rely on a single prompt but on task delegation. It employs a 
 #### 🛡️ [Agent_Auditor.py](Agentique/agent_Auditor/agent_Auditor.py) | [Spécifications](Docs/Agents/README_agent_Auditor.md)
 
 * **Primary responsibility**: Ensure technical integrity, code security and strict compliance with data contracts across the system.
-* **What it never does** :
-    * It never modifies business logic or the decision-making behavior of other agents.
-    * It never allows destructive actions on sanctified directories without proof of backup rotation.
 
 #### 💻 [Agent_Code.py](Agentique/agent_Code/agent_Code.py) | [Spécifications](Docs/Agents/README_agent_Code.md)
 * **Primary responsibility**: Orchestrate access to source code intelligence via a hybrid search and indexing system to enable understanding of complex codebases.
-* **What it never does** :
-    * It never runs unit tests or code in real time.
-    * It never modifies source files directly.
-    * It must never guess a code structure without querying the index.
 
 #### 🧠 [Agent_Contexte.py](Agentique/agent_Contexte/agent_Contexte.py) | [Spécifications](Docs/Agents/README_agent_Contexte.md)
 
 * **Primary responsibility**: Orchestrate retrieval, filtering and intelligent formatting of context (memory, rules and history) to prevent conversational amnesia.
-* **What it never does** :
-    * It never performs raw vector search itself (it delegates that task).
-    * It never makes a final decision on the user's response.
-    * It must never invent rules not present in the system.
 
 #### ⚖️ [Agent_Juge.py](Agentique/agent_Juge/agent_Juge.py) | [Spécifications](Docs/Agents/README_agent_Juge.md)
 
 * **Primary responsibility**: Evaluate quality and factual reliability of system information acting as an unforgiving arbiter of relevance and coherence.
-* **What it never does** :
-    * It never invents facts to fill gaps in context.
-    * It never generates conversational responses intended for the end user.
-    * It must never soften a negative verdict for politeness.
 
 #### 🔎 [Agent_Recherche.py](Agentique/agent_Recherche/agent_Recherche.py) | [Spécifications](Docs/Agents/README_agent_Recherche.md)
 
 * **Primary responsibility**: Locate and extract any relevant information (memory, code, web) with near-instant performance to feed the system's reasoning.
-* **What it never does** :
-    * It never alters or deletes indexed files.
-    * It never generates content without sources (it's an evidence agent).
-    * It must never guess a file's content without explicitly reading it.
 
 #### 🔄 [Agent_Reflexor.py](Agentique/agent_Reflexor/agent_Reflexor.py) | [Spécifications](Docs/Agents/README_agent_Reflexor.md)
 
 * **Primary responsibility**: Analyze incidents and user feedback to ensure behavioral self-correction and continuous improvement.
-* **What it never does** :
-    * It never attempts to justify an error to the user.
-    * It never directly modifies executing agents without passing through reflexive logging.
-    * It must never erase or hide the system's mistakes.
 
 #### 📝 [Agent_Parole.py](Agentique/agent_Parole/agent_Parole.py) | [Spécifications](Docs/Agents/README_agent_Parole.md)
 
 * **Primary responsibility**: Build the final ChatML prompt by dynamically assembling system variables, user profile, and business context to guide the LLM.
-* **What it never does** :
-    * It never invents content, acting as a pure structure builder.
-    * It never communicates directly with the LLM engine.
-    * It must never change the tone or identity of Semi.
 
 #### 🎓 [Agent_Entraineur.py](Agentique/agent_Entraineur/agent_Entraineur.py) | [Spécifications](Docs/Agents/README_agent_Entraineur.md)
 
 * **Primary responsibility**: Oversee system learning by merging datasets and training intention classifiers (SBERT).
-* **What it never does** :
-    * It never trains the base model (SentenceTransformer), only classifier heads.
-    * It never deploys models if validation accuracy is insufficient.
-    * It must never be used for real-time intention classification.
 
 #### 💾 [Agent_Memoire.py](Agentique/agent_Memoire/agent_Memoire.py) | [Spécifications](Docs/Agents/README_agent_Memoire.md)
 
 * **Primary responsibility**: Autonomously manage the lifecycle of persistent memory ensuring capture, storage and indexing of all system data.
-* **What it never does** :
-    * It never deletes data without an explicit governance directive.
-    * It never modifies config files or project source code.
-    * It must never store temporary or volatile data.
 
 ---
 
