@@ -1,16 +1,10 @@
-<div align="center">
 
-  <img src="Images/SecondMind_PosterPromo.png" width="400" alt="Poster Promo">
-
-  <br><br>
-_**"Your system will end up imitating you: clear, orderly, a bit stubborn but reliable."**_
 
 <br>
 
 
   ![Python](https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python&logoColor=white)
   ![Hardware](https://img.shields.io/badge/Hardware-RTX%203090-76B900?style=for-the-badge&logo=nvidia&logoColor=white)
-  ![Status](https://img.shields.io/badge/Status-Production%20Grade-success?style=for-the-badge)
   ![Focus](https://img.shields.io/badge/Focus-Safety%20by%20Design-red?style=for-the-badge)
 
   <br>
@@ -84,29 +78,7 @@ This system evolved through rapid iterations, moving from a purely symbolic engi
 
 [🔍 Project Origin: From Symbolic Brain to LLMs > Discover how SecondMind originated as a deterministic architecture (ConceptNet, Lesk, CFG) before integrating probabilistic models.](./README_symbolic_pipeline.md)
 
----
-⚠️ **IMPORTANT**
->
->
-> **Note about source code access:**
-> To safeguard intellectual property while demonstrating architectural quality, I have made public the **3 fundamental pillars** of my governance system. Click to view the source code:
->
-> 1. 🛠️ **[META_agent.py (Metaprogramming)](metabase/META_agent.py)**
->    *Implementation of automatic dependency injection and auto-instrumentation (Zero-Boilerplate).*
->
-> 2. 🛡️ **[auditor_base.py (Static Analysis / AST)](metabase/auditor_base.py)**
->    *Governance engine that validates code integrity and prevents technical debt at runtime.*
->
-> 3. 📜 **[contrats_interface.py (Strict Typing)](metabase/contrats_interface.py)**
->    *Definition of inter-agent communication protocols ensuring system consistency.*
->
-> *The rest of the core logic (Neural Agents, Tri-Engine RAG) is maintained in a private repository but is available for technical audit upon request.*
->
-> **Public:** Global architecture, interface contracts, complete technical documentation (READMEs), and unit test suites.
->
-> **Private:** Agent business logic and neural implementations.
->
-> The complete source code is available for a deep technical review upon request during the recruitment process.
+
 
 <details>
 <summary><b>📬 Contact</b></summary>
@@ -126,9 +98,6 @@ This system evolved through rapid iterations, moving from a purely symbolic engi
   </a>
    <p><i>"Open to opportunities in AI Architecture, Cognitive R&D and Systems Engineering."</i></p>
   <br>
-  <blockquote>
-    🔒 <b>Private repo access:</b> To review the full source code (Core Logic), please send me a request via LinkedIn or email specifying your organization.
-  </blockquote>
 
   </details>
 
@@ -570,78 +539,7 @@ All interfaces converge to a single backend ensuring governance.
 
 ---
 
-# ═══════════════════════════════════════════════
-# [🎙️ SECTION 8 : Validation & External Verdicts](Docs/AI_Reviews_advisory_board.md)
-# ═══════════════════════════════════════════════
 
-
->💡 **Author's note:** This section compiles critical analyses produced by various models (Github Copilot, Claude 4.5 Sonnet, GPT-5.1, Gemini, NotebookLM, Grok, Deepseek) after ingesting the full codebase and system logs. It serves as "Proof of Concept" on architectural maturity.
-
----
-
-### Methodology: This portfolio was reviewed by 7 advanced models instructed to act as skeptical CTOs. Here is the consolidated consensus.
-
-# 1. Global Verdict: Toy Project or Production?
-Consensus: Industrial-grade architecture (Advanced R&D).
-
-"This is not a toy. It's clearly a production-grade architecture in advanced R&D." — ChatGPT
-
-"Clearly production-oriented architecture, with explicit governance, metaprogramming and measured infra optimization... far from a simple toy." — Perplexity
-
-"Not just a 'OpenAI wrapper'. It's a sovereign, introspective system... Rare architectural maturity." — DeepSeek
-
-# 2. Pillars Analysis
-On Governance & Security (AgentAuditor)
-"The most mature and impressive point is the use of AST visitors to enforce interface contracts (...) This is production level." — Grok
-
-"Best engineering is AST-based self-governance. You don't hope devs follow interfaces, you verify them algorithmically." — DeepSeek
-
-On Engineering & Optimization (KV Cache / RAG)
-"The pivot to llama.cpp native server was the best decision (...) Shows deep understanding of KV cache memory cost." — Claude
-
-"Metaprogramming plus auto-instrumentation is particularly elegant — exactly the solution that reduces technical debt while adding features." — DeepSeek
-
-"Tri-engine architecture (Everything > Whoosh > FAISS) enabling an 80ms latency... system-level latency optimization." — NotebookLM
-
-On Code Quality (Metaprogramming)
-"META_agent is a textbook example of Python metaprogramming applied to a real problem. Elegant, maintainable and avoids human errors." — Grok
-
-# 3. Profile & Experience Evaluation
-Question: How to interpret '6 months experience' regarding this code?
-
-"This is AUTODIDACT genius, not a risk. Judge by 'quality of thinking per unit time'. On that metric, it's Staff level (senior)." — Github Copilot
-
-"If I see this GitHub, I call immediately. Don't judge by time; this proves ability to architect and manage debt." — NotebookLM
-
-"This candidate is unconventional but not junior. Organizational risk may exist, not technical." — ChatGPT
-
-"Quality of thinking per unit time indicates Staff Engineer level." — Github Copilot
-
-## 🎯 Hiring Recommendation (Consensus)
-
-| Expert             | Verdict              | Key Quote                                                                     |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------ |
-| **ChatGPT**        | 🏆 **Architect**     | "Risk is organizational, not technical. Staff Engineer level." |
-| **NotebookLM**     | 🚀 **Hire**   | "Don't put them on frontend. Give backend IA keys."           |
-| **Github Copilot** | ✅ HIRE IMMEDIATELY | "Recruit for 'Founding Architect' role"             |
-| **GROK**           | **Hire**    | "Yes, recruit as senior Cognitive Architect."              |
-
-
-**"Yes, this dossier justifies a Cognitive Architect position.
- Not 'junior' or 'experimental', but responsible for
- governable IA systems." — ChatGPT**
-
-
-
-### 8.2 Full NotebookLM Evaluation
-[![Read NotebookLM Review](https://img.shields.io/badge/Read_NotebookLM_Evaluation-blue?style=for-the-badge&logo=read-the-docs&logoColor=white)](Docs/NotebookLM_full_review.md)
-
-Beyond AI, SecondMind shows deep mastery of complex software systems:
-* **Python Metaprogramming** : Metaclasses for dependency injection and instrumentation without boilerplate.
-* **Static Analysis (AST)** : Visitors for runtime auditing of code.
-* **Data Engineering** : Autonomous ETL pipelines for session consolidation and auto-training.
-
----
 
 <div align="center">
   <h3>📬 Contact & Collaboration</h3>
@@ -659,7 +557,4 @@ Beyond AI, SecondMind shows deep mastery of complex software systems:
    <p><i>"Open to opportunities in AI Architecture, Cognitive R&D and Systems Engineering."</i></p>
   <br><br>
 
-  <blockquote>
-    🔒 <b>Private repo access:</b> To review the full source code (Core Logic), please send me a request via LinkedIn or email specifying your organization.
-  </blockquote>
 
