@@ -21,10 +21,7 @@
 
 
 
-<details>
-<summary><b>⚡ EXECUTIVE SUMMARY (Click to expand)</b></summary>
-
-<br>
+⚡ EXECUTIVE SUMMARY
 
 ### Starting from zero, I designed and developed:
 1. **A multi-agent cognitive architecture** Centralized orchestration where each agent has a unique, isolated, and replaceable role.
@@ -38,19 +35,17 @@
 5. **Observability**: Creation of a real-time Dashboard (Prompt Viewer) to debug the actual context seen by the LLM.
 
 # **Clear architectural vision**:
-- Multi-agent "Hub & Spoke" design: Centralized orchestration (AgentSemi) with loose coupling.
-- Modularity: Each agent has a unique role and is an isolated, interchangeable micro-service.
-- Strict Contracts: Typed and validated inter-agent communication
-- Security by Design: Continuous static audit to guarantee compliance with contracts.
-- Fail-Fast & Resilience: Real-time error detection and handling.
+- **Multi-agent** "Hub & Spoke" design: Centralized orchestration (AgentSemi) with loose coupling.
+- **Modularity**: Each agent has a unique role and is an isolated, interchangeable micro-service.
+- **Strict Contracts**: Typed and validated inter-agent communication
+- **Security by Design**: Continuous static audit to guarantee compliance with contracts.
+- **Fail-Fast & Resilience**: Real-time error detection and handling.
 
 # 🚀 **Hardware Optimization**
-- Tri-model architecture: SBERT Sentence-Transformers, Phi3Mini and Qwen2.5 Coder
-- VRAM optimization: Qwen 2.5 14B inference on consumer GPU (RTX 3090).
-- Quantized Cache (Q4/Q8): Management of a 130,000-token window without memory saturation.
-- Low Latency: Intention router (SBERT) to avoid unnecessary GPU calls.
-
-<br>
+- **Tri-model architecture**: SBERT Sentence-Transformers, Phi3Mini and Qwen2.5 Coder
+- **VRAM optimization**: Qwen 2.5 14B inference on consumer GPU (RTX 3090).
+- **Quantized Cache (Q4/Q8)**: Management of a 130,000-token window without memory saturation.
+- **Low Latency**: Intention router (SBERT) to avoid unnecessary GPU calls.
 
 ---
 
